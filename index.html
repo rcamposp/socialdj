@@ -4,6 +4,9 @@
 		<script type="text/javascript" src="js/angular.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="socialdjapp.js"></script>
+		<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+		<!--<script type="text/javascript" src="auth.js"></script>-->
+		<script type="text/javascript" src="search.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
@@ -53,6 +56,12 @@
 						<button ng-click="session.addSong(song)">Add</button>
 					</div>
 				</div>
+				<div id="buttons">
+			      <label> <input id="query" value='cats' type="text"/><button id="search-button" disabled onclick="search()">Search</button></label>
+			    </div>
+			    <div id="search-container">
+			    </div>
+
 			</div>
 
 		</div>

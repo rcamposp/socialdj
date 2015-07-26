@@ -15,8 +15,8 @@ app.controller('SessionCtrl',function(){
 	};
 
 	this.searchSongs = function(){		
-		this.searchSongList = Object.create(searchSongListDemo);
-		return this.searchSongList;
+		//this.searchSongList = Object.create(searchSongListDemo);
+		//return this.searchSongList;
 	};
 
 	this.addVote = function(song){
