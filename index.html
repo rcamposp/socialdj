@@ -1,0 +1,63 @@
+<html ng-app="socialdjApp">
+	<head>
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="socialdjapp.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+	</head>
+	<body ng-controller="SessionCtrl as session">
+		<div class="container">
+			<div class="col-md-4">
+				<h3>Now Playing</h3>
+				<div class="col-md-8">
+					{{session.currentSong.name}}<br>
+					{{session.currentSong.artist}}<br>
+					{{session.currentSong.thumb}}
+				</div>
+				<div class="col-md-4">
+					<button>Play/Pause</button>
+					<button ng-click="session.skipSong()">Next</button>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<h3>Playlist</h3>
+				<div class="container-fluid" ng-repeat="song in session.songList | orderBy: '-votes'">
+					<button class="col-md-2" ng-click="session.removeVote(song)">-</button>
+					<div class="col-md-8">
+						{{song.name}}<br>
+						{{song.artist}}<br>
+						{{song.thumb}}<br>
+						{{song.votes}}
+					</div>
+					<button class="col-md-2" ng-click="session.addVote(song)">+</button>
+				</div>
+			</div>			
+
+			<div class="col-md-4">
+				<h3>Add Song</h3>
+				<input type="text">
+				<button ng-click="searchResult = session.searchSongs()">Search</button>
+				<div class="container-fluid" ng-repeat="song in searchResult">
+					<div class="col-md-8">
+						{{song.name}}<br>
+						{{song.artist}}<br>
+						{{song.thumb}}<br>
+						
+					</div>
+					<div class="col-md-4">
+						<button ng-click="session.addSong(song)">Add</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		
+
+	</body>
+</html>
