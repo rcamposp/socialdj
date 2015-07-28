@@ -4,9 +4,9 @@
 		<script type="text/javascript" src="js/angular.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="socialdjapp.js"></script>
-		<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-		<!--<script type="text/javascript" src="auth.js"></script>-->
-		<script type="text/javascript" src="search.js"></script>
+		<script type="text/javascript" src="player.js"></script>
+		
+		
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
@@ -16,10 +16,11 @@
 		<div class="container">
 			<div class="col-md-4">
 				<h3>Now Playing</h3>
+				<div id="ytplayer"></div>
 				<div class="col-md-8">
 					{{session.currentSong.name}}<br>
 					{{session.currentSong.artist}}<br>
-					{{session.currentSong.thumb}}
+					<img src="{{session.currentSong.thumb}}"/>
 				</div>
 				<div class="col-md-4">
 					<button>Play/Pause</button>
@@ -34,7 +35,7 @@
 					<div class="col-md-8">
 						{{song.name}}<br>
 						{{song.artist}}<br>
-						{{song.thumb}}<br>
+						<img src="{{song.thumb}}"/>
 						{{song.votes}}
 					</div>
 					<button class="col-md-2" ng-click="session.addVote(song)">+</button>
@@ -43,25 +44,19 @@
 
 			<div class="col-md-4">
 				<h3>Add Song</h3>
-				<input type="text">
-				<button ng-click="searchResult = session.searchSongs()">Search</button>
+				<input type="text" ng-model="query">
+				<button ng-click="searchResult = session.searchSongs(query)">Search</button>
 				<div class="container-fluid" ng-repeat="song in searchResult">
 					<div class="col-md-8">
 						{{song.name}}<br>
 						{{song.artist}}<br>
-						{{song.thumb}}<br>
+						<img src="{{song.thumb}}"/>
 						
 					</div>
 					<div class="col-md-4">
 						<button ng-click="session.addSong(song)">Add</button>
 					</div>
-				</div>
-				<div id="buttons">
-			      <label> <input id="query" value='cats' type="text"/><button id="search-button" disabled onclick="search()">Search</button></label>
-			    </div>
-			    <div id="search-container">
-			    </div>
-
+				</div>							  
 			</div>
 
 		</div>
