@@ -4,7 +4,17 @@
 		<script type="text/javascript" src="js/angular.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="socialdjapp.js"></script>
-		<script type="text/javascript" src="player.js"></script>
+
+		<script type="text/javascript" src="js/sdk-init.js"></script>
+		<script type="text/javascript" src="js/shred.bundle.js"></script>
+		<script type="text/javascript" src="js/swagger.js"></script>
+		<script type="text/javascript" src="df-operations.js"></script>
+
+		<!-- Socket.io -->
+        <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+
+        <!-- Our app.js file -->
+        <script type="text/javascript" src="js/socket.io-client.js"></script>
 		
 		
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
@@ -12,11 +22,12 @@
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
 	</head>
-	<body ng-controller="SessionCtrl as session">
+	<body id="session" ng-controller="SessionCtrl as session">
 		<div class="container">
 			<div class="col-md-4">
 				<h3>Now Playing</h3>
-				<div id="ytplayer"></div>
+				<div id="dz-root"></div>
+				<div id="player" style="width:300px;" align="center"></div>
 				<div class="col-md-8">
 					{{session.currentSong.name}}<br>
 					{{session.currentSong.artist}}<br>
@@ -62,6 +73,7 @@
 		</div>
 
 		
-
+		<script src="https://cdns-files.deezer.com/js/min/dz.js"></script>
+		<script type="text/javascript" src="player.js"></script>
 	</body>
 </html>

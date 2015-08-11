@@ -16,6 +16,7 @@ io.sockets.on('connection', function (socket) {
     socket.emit('messages-available', messages);
 
     socket.on('add-message', function (data) {
+        console.log(data);
         messages.push(data);
         sockets.forEach(function (socket) {
             socket.emit('message-added', data);

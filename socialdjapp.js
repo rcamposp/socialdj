@@ -4,62 +4,69 @@ app.controller('SongCtrl', function(){
 	
 });
 
-app.controller('SessionCtrl',['$http', function($http){
-	this.songList = songs;
+app.controller('SessionCtrl',['$http', function($http){	
+	this.songList = {};
 	this.searchSongList = Object.create(searchSongListDemo);
 	this.currentSong = {
 		name	: "Foals Great Hits",
 		artist	: "Foals",
 		thumb	: "https://i.ytimg.com/vi/uG9JJZM_mVg/default.jpg",
 		votes	: 15,
-		videoId : "uG9JJZM_mVg",
+		playerid : "uG9JJZM_mVg",
 	};
 
 	this.searchSongs = function(query){		
 		//this.searchSongList = Object.create(searchSongListDemo);
 		//return this.searchSongList;
-		var youtubeResults = this;
-		youtubeResults.searchSongList = [];
+		var searchResults = this;
+		searchResults.searchSongList = [];
 		//Sample API Request
 		//https://www.googleapis.com/youtube/v3/search?q=dogs&part=snippet&type=video&maxResults=12&key=AIzaSyDnh9jrfKUgy8g7v6qGXQomwwqkzYh8bok
-		$http.get('https://www.googleapis.com/youtube/v3/search?&part=snippet&videoEmbeddable=true&type=video&videoCategoryId=10&maxResults=12&key=AIzaSyDnh9jrfKUgy8g7v6qGXQomwwqkzYh8bok&q='+query).
-		  success(function(data, status, headers, config) {
-		    console.log(data);
+		$http.jsonp('http://api.deezer.com/search?callback=JSON_CALLBACK&output=jsonp&q='+query).
+		  success(function(dataResult, status, headers, config) {
+		    data = dataResult.data;
 		    var results = [];
-		    for(i=0;i<data.items.length;i++){
-		    	youtubeResults.searchSongList.push({
-		    		name	: data.items[i].snippet.title,
-		    		artist	: "-",
-		    		thumb 	: data.items[i].snippet.thumbnails.default.url,
-		    		votes 	: 0,
-		    		videoId	: data.items[i].id.videoId,
+		    for(i=0;i<data.length;i++){
+		    	searchResults.searchSongList.push({
+		    		id 			: 0, 
+		    		name		: data[i].title,
+		    		artist		: data[i].artist.name,
+		    		thumb 		: data[i].album.cover_medium,
+		    		votes 		: 1,
+		    		playerid	: data[i].id,
 		    	});
 		    }
-		    //youtubeResults = results;
-		    console.log(youtubeResults);
-		    return youtubeResults;
+		    //searchResults = results;		    
+		    return searchResults;
 		  }).
 		  error(function(data, status, headers, config) {
 		    // called asynchronously if an error occurs
 		    // or server returns response with an error status.
 		  });
-		  return youtubeResults.searchSongList;
+		  return searchResults.searchSongList;
 	};
 
 	this.addVote = function(song){
 		song.votes = song.votes + 1;
+		window.app.updateSong(song);
 	}
 
 	this.removeVote = function(song){
 		if(song.votes > 0){
-			song.votes = song.votes - 1;		
+			song.votes = song.votes - 1;	
+			window.app.updateSong(song);
 		}
+	}
+
+	this.updateSong = function(song){
+		window.app.getSong(song);
 	}
 
 	this.addSong = function(song){	
 		isOnList = this.getIndexOfSong(song);			
 		if(!isOnList){
-			this.songList.push(song);		
+			this.songList.push(song);
+			window.app.addSong(song);		
 			//Remove song from the search results so you can't add it again.
 			var index = this.searchSongList.indexOf(song);
 	  		this.searchSongList.splice(index, 1); 
@@ -88,14 +95,10 @@ app.controller('SessionCtrl',['$http', function($http){
 				songWithMostVotes = this.songList[i];
 				index = i;
 			}
-		}		
+		}				
 		this.currentSong = songWithMostVotes;
-		this.songList.splice(index,1);
-		console.log(this.currentSong);
-		loadVideo(this.currentSong.videoId);
-		
-		
-		
+		this.songList.splice(index,1);		
+		DZ.player.playTracks([this.currentSong.playerid]);					
 	}
 
 }]);
@@ -106,24 +109,26 @@ var songs = [
 		artist 	: "Foals",
 		thumb 	: "https://i.ytimg.com/vi/-QHZ2YRPFVo/default.jpg",		
 		votes 	: 10,
-		videoId : "-QHZ2YRPFVo",
+		playerid : "-QHZ2YRPFVo",
 	},
 	{
 		name 	: "Foals - What Went Down [Official Music Video]",
 		artist 	: "Foals",
 		thumb 	: "https://i.ytimg.com/vi/iuQQIawCqBA/default.jpg",		
 		votes 	: 12,
-		videoId : "QHZ2YRPFVo",
+		playerid : "QHZ2YRPFVo",
 	},
 	{
 		name 	: "FOALS - A Knife In The Ocean (Live BBC Radio 1)",
 		artist 	: "Foals",
 		thumb 	: "https://i.ytimg.com/vi/vxr1jaru6XQ/default.jpg",
 		votes 	: 8,
-		videoId : "vxr1jaru6XQ",
+		playerid : "vxr1jaru6XQ",
 	},
 
 ];
+
+
 
 var searchSongListDemo = [
 	{
