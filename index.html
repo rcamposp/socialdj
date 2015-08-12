@@ -28,9 +28,11 @@
 				<h3>Now Playing</h3>
 				<div id="dz-root"></div>
 				<div id="player" style="width:300px;" align="center"></div>
-				<div class="col-md-8">
+				<div class="col-md-5">
 					{{session.currentSong.name}}<br>
 					{{session.currentSong.artist}}<br>
+				</div>
+				<div class="col-md-3">
 					<img src="{{session.currentSong.thumb}}"/>
 				</div>
 				<div class="col-md-4">
@@ -42,14 +44,17 @@
 			<div class="col-md-4">
 				<h3>Playlist</h3>
 				<div class="container-fluid" ng-repeat="song in session.songList | orderBy: '-votes'">
-					<button class="col-md-2" ng-click="session.removeVote(song)">-</button>
-					<div class="col-md-8">
+					<button class="col-sm-1" ng-click="session.removeVote(song)">-</button>
+					<div class="col-sm-5">
+						{{song.id}}<br>
 						{{song.name}}<br>
 						{{song.artist}}<br>
-						<img src="{{song.thumb}}"/>
 						{{song.votes}}
 					</div>
-					<button class="col-md-2" ng-click="session.addVote(song)">+</button>
+					<div class="col-sm-4">
+						<img style="width:100%;" src="{{song.thumb}}"/>						
+					</div>
+					<button class="col-sm-1" ng-click="session.addVote(song)">+</button>
 				</div>
 			</div>			
 

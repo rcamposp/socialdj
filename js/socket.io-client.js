@@ -5,11 +5,16 @@ function updateSong (song) {
     var scope = angular.element($("#session")).scope();  
     if(scope != undefined){
         scope.$apply(function(){
+            var found = false;
             for(i=0;i<scope.session.songList.length;i++){
                 if(scope.session.songList[i].id == song.song.id){                    
                     scope.session.songList[i] = song.song;
+                    found = true;
                 }    
             }             
+            if(!found){
+                scope.session.songList.push(song.song);
+            }
         }); 
     }  
 };

@@ -6,9 +6,13 @@ document.addEventListener("apiReady", function(){
 });
 
 //Insert a record
-window.app.addSong = function (item) {    
-    window.df.apis.socialdj.createRecords({"table_name":"playlist", "body":item}, function(response) {
-        console.log(JSON.stringify(response));
+window.app.addSong = function (item,callback) {    
+    window.df.apis.socialdj.createRecords({"table_name":"playlist", "body":item}, function(response) {        
+        var scope = angular.element($("#session")).scope();        
+        scope.$apply(function(){
+            item.id = response.id;                      
+            socketioclient.notifySongChange(item);
+        });
     }, function(response) {
         console.log(window.app.getErrorString(response));
     });
