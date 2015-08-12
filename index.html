@@ -1,6 +1,7 @@
 <html ng-app="socialdjApp">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset='utf-8'> 
 
 		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="js/angular.min.js"></script>
@@ -28,6 +29,7 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	</head>
 	<body id="session" ng-controller="SessionCtrl as session">
 		<div class="mdl-grid">
@@ -51,21 +53,20 @@
 			<div class="mdl-cell mdl-cell--4-col">
 				
 					<h3>Playlist</h3>
-					<div class="" ng-repeat="song in session.songList | orderBy: '-votes'">
-					<div class="mdl-grid mdl-card mdl-shadow--2dp demo-card-wide">
-						<div class="mdl-cell mdl-cell--1-col">
+					<div class="song" ng-repeat="song in session.songList | orderBy: '-votes'">
+					<div class="mdl-grid mdl-card mdl-shadow--2dp">
+						<div class="mdl-cell mdl-cell--2-col">
 							<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="session.removeVote(song)"><i class="material-icons">remove</i></button>
 						</div>
-						<div class="mdl-cell mdl-cell--5-col">
-							{{song.id}}<br>
-							{{song.name}}<br>
-							{{song.artist}}<br>
-							{{song.votes}}
+						<div class="mdl-cell mdl-cell--5-col song-info">							
+							<p><i class="material-icons">music_note</i>{{song.name}}</p>
+							<p><i class="material-icons">person</i>{{song.artist}}</p>
+							<p><i class="material-icons">star</i>{{song.votes}}</p>
 						</div>
-						<div class="mdl-cell mdl-cell--5-col">
+						<div class="mdl-cell mdl-cell--3-col">
 							<img style="width:100%;" src="{{song.thumb}}"/>						
 						</div>
-						<div class="mdl-cell mdl-cell--1-col">
+						<div class="mdl-cell mdl-cell--2-col">
 							<button class=" mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="session.addVote(song)"><i class="material-icons">add</i></button>
 						</div>
 					</div>
@@ -76,16 +77,20 @@
 				<h3>Add Song</h3>
 				<input type="text" ng-model="query">
 				<button ng-click="searchResult = session.searchSongs(query)">Search</button>
-				<div class="container-fluid" ng-repeat="song in searchResult">
-					<div class="col-md-8">
-						{{song.name}}<br>
-						{{song.artist}}<br>
-						<img src="{{song.thumb}}"/>
-						
-					</div>
-					<div class="col-md-4">
-						<button ng-click="session.addSong(song)">Add</button>
-					</div>
+				<div class="song" ng-repeat="song in searchResult">
+
+					<div class="mdl-grid mdl-card mdl-shadow--2dp">						
+						<div class="mdl-cell mdl-cell--5-col song-info">							
+							<p><i class="material-icons">music_note</i>{{song.name}}</p>
+							<p><i class="material-icons">person</i>{{song.artist}}</p>							
+						</div>
+						<div class="mdl-cell mdl-cell--3-col">
+							<img style="width:100%;" src="{{song.thumb}}"/>						
+						</div>
+						<div class="mdl-cell mdl-cell--2-col">
+							<button class=" mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="session.addSong(song)"><i class="material-icons">add</i></button>
+						</div>
+					</div>				
 				</div>							  
 			</div>
 

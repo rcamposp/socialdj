@@ -5,7 +5,8 @@ app.controller('SongCtrl', function(){
 });
 
 app.controller('SessionCtrl',['$http', function($http){	
-	this.songList = {};
+	//this.songList = {};
+	this.songList = demo_data.songList;
 	this.searchSongList = Object.create(searchSongListDemo);
 	this.currentSong = {
 		name	: "Foals Great Hits",

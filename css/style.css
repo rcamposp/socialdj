@@ -1,0 +1,28 @@
+body{
+	background-color: #000;
+	color: #fff;
+}
+
+.song > div{
+	width: 100%;
+	margin-bottom: 20px;
+	min-height: 0;
+	height: 160px;
+	color: #fff;
+	background-color: #222;
+}
+
+.song button{
+	margin-top: 45px;
+}
+
+.song button i{
+	color: #fff;
+}
+.dark-icon{
+	color: #111;
+}
+
+.song-info i{
+	vertical-align: middle;
+}
