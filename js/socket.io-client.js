@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:4000');
+var socket = io.connect('http://45.55.46.35:4000');
 
 function updateSong (song) {
     //Ajax call to update the song    
