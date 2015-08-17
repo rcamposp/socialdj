@@ -5,7 +5,7 @@ DZ.init({
     player: {
       container: 'player',
       width : "100%",
-      height : 300,
+      height : 70,
       onload : function(){}
     }
   });

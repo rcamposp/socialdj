@@ -5,9 +5,10 @@ app.controller('SongCtrl', function(){
 });
 
 app.controller('SessionCtrl',['$http', function($http){	
-	this.songList = {};
-	//this.songList = demo_data.songList;
+	//this.songList = {};
+	this.songList = demo_data.songList;
 	this.searchSongList = Object.create(searchSongListDemo);
+	this.searchResults = {};
 	this.currentSong = {
 		name	: "Foals Great Hits",
 		artist	: "Foals",
@@ -19,16 +20,16 @@ app.controller('SessionCtrl',['$http', function($http){
 	this.searchSongs = function(query){		
 		//this.searchSongList = Object.create(searchSongListDemo);
 		//return this.searchSongList;
-		var searchResults = this;
-		searchResults.searchSongList = [];
+		var results = this;
+		results.searchSongList = [];
 		//Sample API Request
 		//https://www.googleapis.com/youtube/v3/search?q=dogs&part=snippet&type=video&maxResults=12&key=AIzaSyDnh9jrfKUgy8g7v6qGXQomwwqkzYh8bok
 		$http.jsonp('http://api.deezer.com/search?callback=JSON_CALLBACK&output=jsonp&q='+query).
 		  success(function(dataResult, status, headers, config) {
 		    data = dataResult.data;
-		    var results = [];
+		    
 		    for(i=0;i<data.length;i++){
-		    	searchResults.searchSongList.push({
+		    	results.searchSongList.push({
 		    		id 			: 0, 
 		    		name		: data[i].title,
 		    		artist		: data[i].artist.name,
@@ -38,14 +39,15 @@ app.controller('SessionCtrl',['$http', function($http){
 		    	});
 		    }
 		    //searchResults = results;		    
-		    console.log(JSON.stringify(searchResults));
-		    return searchResults;
+		    //console.log(JSON.stringify(searchResults));
+		    results.searchResults = results.searchSongList;
+		    return results;
 		  }).
 		  error(function(data, status, headers, config) {
 		    // called asynchronously if an error occurs
 		    // or server returns response with an error status.
 		  });
-		  return searchResults.searchSongList;
+		  return results.searchSongList;
 	};
 
 	this.addVote = function(song){
@@ -104,7 +106,11 @@ app.controller('SessionCtrl',['$http', function($http){
 		this.currentSong = songWithMostVotes;
 		this.songList.splice(index,1);		
 		DZ.player.playTracks([this.currentSong.playerid]);					
-	}
+	};
+
+	this.hideElement = function(element){
+		$(element).addClass("hide");		
+	};
 
 }]);
 
