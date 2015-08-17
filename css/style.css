@@ -1,11 +1,12 @@
 body{
-	background-color: #000;
+	font-family: 'Roboto', sans-serif;
+	background-color: #333;
 	color: #fff;
 }
 
-.song > div{
+.song {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	min-height: 0;
 	height: 160px;
 	color: #fff;
@@ -13,7 +14,15 @@ body{
 }
 
 .song button{
-	margin-top: 45px;
+	background-color: #FF6E40;	
+	box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+	border: none;
+	height: 35px;
+}
+
+.song .thumb img{
+	width: 100%;
+    max-width: 124px;
 }
 
 .song button i{
@@ -25,4 +34,162 @@ body{
 
 .song-info i{
 	vertical-align: middle;
+}
+
+#now-playing{
+	position: fixed;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;    
+    height: 80px;
+    border: solid 1px #222;
+}
+
+#now-playing {
+	background: #333;	
+}
+
+#now-playing img{
+	height: 62px;
+	float: right;
+    margin-top: 8px;
+    margin-right: 10px;
+}
+
+.next-button{
+	height: 62px;
+    margin-top: 8px;
+    background-color: #32323A;
+    color: #fff;
+    border: 1px solid #222;
+    border-left: none;
+    float: left;
+    margin-left: -9px;
+    position: relative;
+}
+
+#player{
+	float: left;
+}
+
+.next-button:active,.next-button:focus,.next-button:hover{
+	border-color: #222;
+	box-shadow: none;
+	outline: 0 none;
+}
+
+#menu{
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+	border: 0;
+	text-align: center;
+}
+
+#menu li{
+	padding: 0;
+	border: 0;
+	background-color: #FF6E40;	
+	overflow: hidden;
+}
+
+#menu li a{
+	background-color: transparent;
+	color: #fff;
+	border: 0;
+	height: 51px;
+	font-size: 14px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+#menu li a:hover{
+	background-color: transparent;
+	border-bottom: solid 2px  #FD5620;
+}
+
+
+.ripple {	
+	/*relative positioning for list items along with overflow hidden to contain the overflowing ripple*/
+	position: relative;
+	
+}
+
+
+/*.ink styles - the elements which will create the ripple effect. The size and position of these elements will be set by the JS code. Initially these elements will be scaled down to 0% and later animated to large fading circles on user click.*/
+.ink {
+	display: block; position: absolute;
+	background: hsl(180, 40%, 80%);
+	border-radius: 100%;
+	transform: scale(0);
+}
+/*animation effect*/
+.ink.animate {animation: ripple 0.4s linear;}
+@keyframes ripple {
+	/*scale the element to 250% to safely cover the entire link and fade it out*/
+	100% {opacity: 0; transform: scale(2.5);}
+}
+
+.nospace{
+	padding: 0;
+	margin: 0;
+}
+
+#home > div:last-of-type{
+	margin-bottom: 88px;
+}
+
+#search{
+	border: none;
+	border-bottom: 2px solid #FF6E40;
+	background-color: transparent;	
+	color: #fff;    
+	padding-left: 25px;
+	width: 90%;
+    margin-bottom: 20px;
+}
+
+#search:active,#search:focus,#search:hover{
+	outline: 0 none;
+}
+
+#search-icon{
+	position: relative;
+    left: 20px;
+}
+
+#search-empty{
+	text-align: center;
+	margin-top: 40px;
+}
+
+#search-empty i{
+	font-size: 140px;
+}
+
+#search-empty strong, #search-empty i, #search-empty p{
+	display: block;
+}
+
+.song.search{
+	height: 110px;
+}
+
+.song.search .thumb{
+	text-align: left;
+}
+
+.song.search .thumb img{
+	max-height: 110px;
+}
+
+.add-song{
+	text-align: right;
+}
+
+.add-song button{
+	height: 110px !important;
+    box-shadow: none !important;
+}
+
+#search-container > div:last-of-type{
+	margin-bottom: 90px;
 }
