@@ -6,7 +6,7 @@ window.onload = function () {
         apiReady.initEvent("apiReady", true, false);
     }
     //replace this dsp_url with yours ( leave the /rest/api_docs part )
-    var dsp_url = "http://192.168.0.4:8080/rest/api_docs";
+    var dsp_url = url_http+"/rest/api_docs";
     //replace this app_name with yours
     var app_name = "socialdj";
 

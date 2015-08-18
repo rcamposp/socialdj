@@ -1,6 +1,6 @@
 
 DZ.init({
-    appId  : 'e578f30dfee96be239aa95680c2f1b08',
+    appId  : deezer_api_key,
     channelUrl : 'localhost',
     player: {
       container: 'player',

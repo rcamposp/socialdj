@@ -26,6 +26,13 @@ window.app.getSongs = function () {
         var scope = angular.element($("#session")).scope();        
 	    scope.$apply(function(){
 	        scope.session.songList = response.record;
+            for(i=0;i<scope.session.songList.length;i++){
+                if(scope.session.songList[i].playing == 1){
+                    scope.session.currentSong = scope.session.songList[i];
+                    DZ.player.playTracks([scope.session.currentSong.playerid], false);                  
+                    console(scope.session.currentSong);
+                }    
+            } 
 	    });       
     }, function(response) { //Error
         console.log(window.app.getErrorString(response));
