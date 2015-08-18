@@ -3,9 +3,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset='utf-8'> 
 
-		<script type="text/javascript" ></script>
+		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>		
+
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="socialdjapp.js"></script>
 
@@ -16,7 +17,7 @@
 		<script type="text/javascript" src="js/ripple.js"></script>
 
 		<!-- Socket.io -->		
-        <script src="http://192.168.0.4:4000/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="js/socket.io.js"></script>
 
         <!-- Our app.js file -->
         <script type="text/javascript" src="js/socket.io-client.js"></script>
@@ -34,7 +35,6 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	</head>
 	<body id="session" ng-controller="SessionCtrl as session">
-
 		<nav id="menu" class="navbar navbar-default navbar-static-top">		  
 		     <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active col-xs-6"><a class="ripple" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playlist</a></li>

@@ -1,4 +1,4 @@
-var socket = io.connect('http://192.168.0.4:4000');
+var socket = io.connect(url_socket_io);
 
 function updateSong (song) {
     //Ajax call to update the song    
