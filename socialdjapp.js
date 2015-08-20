@@ -52,11 +52,8 @@ app.controller('SessionCtrl',['$http', function($http){
 	this.addSong = function(song){	
 		isOnList = this.getIndexOfSong(song);			
 		if(!isOnList){
-			this.songList.push(song);
-			callback = function(){
-
-			}
-			window.app.addSong(song,callback);
+			this.songList.push(song);			
+			window.app.addSong(song);
 			//Remove song from the search results so you can't add it again.
 			var index = this.searchSongList.indexOf(song);
 	  		this.searchSongList.splice(index, 1); 
@@ -64,6 +61,12 @@ app.controller('SessionCtrl',['$http', function($http){
 			alert("Song is already on list! A vote has been added.");
 			this.addVote(song);
 		}		
+	}
+
+	this.deleteSong = function(song){
+		index = this.getIndexOfSong(song);
+		this.songList.splice(index,1);
+		window.app.deleteSong(song);
 	}
 
 	//Check if song is already on the list and returns the index. If not on list. returns false.
@@ -86,8 +89,13 @@ app.controller('SessionCtrl',['$http', function($http){
 				index = i;
 			}
 		}				
+		console.log(this.currentSong);
+		if(Object.keys(this.currentSong).length !== 0){
+			console.log("borrar");
+			this.deleteSong(this.currentSong);
+		}
 		this.currentSong = songWithMostVotes;
-		this.songList.splice(index,1);		
+		this.songList.splice(index,1);			
 		DZ.player.playTracks([this.currentSong.playerid]);					
 	};
 

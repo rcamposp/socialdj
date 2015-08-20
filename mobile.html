@@ -44,9 +44,9 @@
 
 		<div class="tab-content">
 		    <div role="tabpanel" class="tab-pane active" id="home">
-		    	<div class="song" ng-repeat="song in session.songList | orderBy: '-votes'">								<div>
+		    	<div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">								<div>
 		    			<div class="col-xs-4 nospace thumb">
-							<img style="width:100%;" src="{{song.thumb}}"/>						
+							<img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>								
 						</div>
 						<div class="col-xs-8 nospace">							
 							<p><i class="material-icons">music_note</i>{{song.name}}</p>

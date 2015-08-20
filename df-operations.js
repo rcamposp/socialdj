@@ -11,7 +11,7 @@ window.app.addSong = function (item,callback) {
         var scope = angular.element($("#session")).scope();        
         scope.$apply(function(){
             item.id = response.id;                      
-            socketioclient.notifySongChange(item);
+            socketioclient.notifySongChange(item,"add");
         });
     }, function(response) {
         console.log(window.app.getErrorString(response));
@@ -66,9 +66,21 @@ window.app.updateSong = function (item) {
             songId = response.record[0].id;            
             for(i=0;i<scope.session.songList.length;i++){
                 if(scope.session.songList[i].id == songId){                    
-                    socketioclient.notifySongChange(scope.session.songList[i]);
+                    socketioclient.notifySongChange(scope.session.songList[i],"update");
                 }    
             } 
+        });                            
+    }, function(response) {
+        console.log(window.app.getErrorString(response));
+    });
+};
+
+//Delete a record
+window.app.deleteSong = function (song) {        
+    df.apis.socialdj.deleteRecord({"table_name":"playlist", "id":song.id}, function(response) {
+        var scope = angular.element($("#session")).scope();        
+        scope.$apply(function(){
+            socketioclient.notifySongChange(song,"delete");
         });                            
     }, function(response) {
         console.log(window.app.getErrorString(response));
