@@ -1,8 +1,7 @@
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io').listen(server),
-    messages = [],
+    io = require('socket.io').listen(server),    
     sockets = [];
 
 app.use( express.static(__dirname + '/public'));
@@ -12,14 +11,30 @@ server.listen(4000);
 io.sockets.on('connection', function (socket) {
 
     sockets.push(socket);
+    
 
-    socket.emit('messages-available', messages);
+    socket.on('songChange', function (data) {
+        //console.log(data);        
+        song = data.song;
+        action = data.action;
 
-    socket.on('add-message', function (data) {
-        console.log(data);
-        messages.push(data);
-        sockets.forEach(function (socket) {
-            socket.emit('message-added', data);
-        });
+        if(action == "add"){
+            console.log("add");        
+            sockets.forEach(function (socket) {
+                socket.emit('songAdded', song);
+            });
+        }
+        if(action == "update"){
+            console.log("update");        
+            sockets.forEach(function (socket) {
+                socket.emit('songUpdated', song);
+            });
+        }
+        if(action == "delete"){
+            console.log("delete");        
+            sockets.forEach(function (socket) {
+                socket.emit('songDeleted', song);
+            });
+        }
     });
 });
