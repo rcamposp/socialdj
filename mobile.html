@@ -43,7 +43,12 @@
 		</nav>
 
 		<div class="tab-content">
-		    <div role="tabpanel" class="tab-pane active" id="home">
+		    <div role="tabpanel" class="tab-pane active" id="home">		    			    	
+		    	<div id="playlist-empty" ng-show="session.songList.length == 0">
+					<i class="fa fa-music fa-inverse"></i>
+					<strong>The playlist is empty :(</strong>
+					<p>Go to the "Add Song" tab to start playing some music.</p>
+				</div>
 		    	<div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">								<div>
 		    			<div class="col-xs-4 nospace thumb">
 							<img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>								

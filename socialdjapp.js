@@ -90,12 +90,17 @@ app.controller('SessionCtrl',['$http', function($http){
 			}
 		}				
 		console.log(this.currentSong);
-		if(Object.keys(this.currentSong).length !== 0){
-			console.log("borrar");
-			this.deleteSong(this.currentSong);
-		}
 		this.currentSong = songWithMostVotes;
-		this.songList.splice(index,1);			
+		
+		if(Object.keys(this.currentSong).length !== 0){			
+			this.deleteSong(this.currentSong);
+		}else{
+			this.songList.splice(index,1);
+		}
+			
+		
+		//borrada = this.songList.splice(index,1);			
+		//console.log(borrada);
 		DZ.player.playTracks([this.currentSong.playerid]);					
 	};
 
