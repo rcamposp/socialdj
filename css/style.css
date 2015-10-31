@@ -156,16 +156,16 @@ body{
     left: 20px;
 }
 
-#search-empty{
+#search-empty, #playlist-empty{
 	text-align: center;
 	margin-top: 40px;
 }
 
-#search-empty i{
+#search-empty i, #playlist-empty i{
 	font-size: 140px;
 }
 
-#search-empty strong, #search-empty i, #search-empty p{
+#search-empty strong, #search-empty i, #search-empty p, #playlist-empty strong, #playlist-empty i, #playlist-empty p{
 	display: block;
 }
 
