@@ -60,8 +60,7 @@ app.controller('SessionCtrl',['$http', '$firebaseArray' , function($http, $fireb
 		    data = dataResult.data;
 		    
 		    for(i=0;i<data.length;i++){
-		    	results.searchSongList.push({
-		    		id 			: data[i].id, 
+		    	results.searchSongList.push({		    		
 		    		name		: data[i].title,
 		    		artist		: data[i].artist.name,
 		    		thumb 		: data[i].album.cover_medium,
@@ -80,13 +79,19 @@ app.controller('SessionCtrl',['$http', '$firebaseArray' , function($http, $fireb
 	};
 
 	this.addVote = function(song){
-		song.votes = song.votes + 1;
-		window.app.updateSong(song);
+		console.log("HDS");
+		index = this.songList.$indexFor(song.$id);
+		if(index != -1){
+			song.votes = song.votes + 1;
+			this.songList.$save(index).then(function(ref){
+				console.log("vote added");
+			});
+		}
 	}
 
 	this.removeVote = function(song){
 		if(song.votes > 0){
-			song.votes = song.votes - 1;	
+			song.votes = song.votes - 1;
 			window.app.updateSong(song);
 		}
 	}
@@ -95,19 +100,19 @@ app.controller('SessionCtrl',['$http', '$firebaseArray' , function($http, $fireb
 		window.app.getSong(song);
 	}
 
-	this.addSong = function(song){		
-		songlistInstance = this.songList;	
-		searchsonglistInstance = this.searchSongList;
-		this.songList.$ref().orderByChild("id").equalTo(song.id).once("value", function(dataSnapshot){
-	        var id = dataSnapshot.val();
+	this.addSong = function(song){
+		controllerInstance = this;		
+		this.songList.$ref().orderByChild("playerid").equalTo(song.playerid).once("value", function(dataSnapshot){
+	        var playerid = dataSnapshot.val();
+	        console.log(playerid);
 	        if(dataSnapshot.exists()){
 	          	alert("Song is already on list! A vote has been added.");
-				this.addVote(song);      
+				controllerInstance.addVote(song);
 	        } else {
-	        	songlistInstance.$add(song);
+	        	controllerInstance.songList.$add(song);
 				//Remove song from the search results so you can't add it again.
 				var index = searchsonglistInstance.indexOf(song);
-	  			searchsonglistInstance.splice(index, 1); 
+	  			controllerInstance.searchSongList.splice(index, 1); 
 	        }
 	    })		
 	}
