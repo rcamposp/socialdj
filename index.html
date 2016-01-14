@@ -3,29 +3,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset='utf-8'> 
 
-		<script type="text/javascript" src="config.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>			
+		
+		<!--Firebase/AngularFire-->
+		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+		<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>		
+
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="socialdjapp.js"></script>
-
-		<script type="text/javascript" src="js/sdk-init.js"></script>
-		<script type="text/javascript" src="js/shred.bundle.js"></script>
-		<script type="text/javascript" src="js/swagger.js"></script>
-		<script type="text/javascript" src="df-operations.js"></script>
-
-		<!-- Socket.io -->
-        <script src="http://localhost:4000/socket.io/socket.io.js"></script>
-
-        <!-- Our app.js file -->
-        <script type="text/javascript" src="js/socket.io-client.js"></script>
 
         <!-- MDL -->        
         <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.red-deep_orange.min.css" /> 
 		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		
-		
+		<link href='http://fonts.googleapis.com/css?family=Roboto:500,400,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
@@ -33,71 +27,80 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	</head>
 	<body id="session" ng-controller="SessionCtrl as session">
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--4-col">
-				<h3>Now Playing</h3>
-				<div id="dz-root"></div>
-				<div id="player" style="width:300px;" align="center"></div>
-				<div class="col-md-5">
-					{{session.currentSong.name}}<br>
-					{{session.currentSong.artist}}<br>
+		<nav id="menu" class="navbar navbar-default navbar-static-top">		  
+		     <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active col-xs-6"><a class="ripple" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playlist</a></li>
+			    <li role="presentation" class="col-xs-6"><a class="ripple" href="#search-container" aria-controls="search-container" role="tab" data-toggle="tab">Add Song</a></li>			  
+			  </ul>		  
+		</nav>
+		
+		<div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">		    			    	
+		    	<div id="playlist-empty" ng-show="session.songList.length == 0">
+					<i class="fa fa-music fa-inverse"></i>
+					<strong>The playlist is empty :(</strong>
+					<p>Go to the "Add Song" tab to start playing some music.</p>
 				</div>
-				<div class="col-md-3">
-					<img src="{{session.currentSong.thumb}}"/>
-				</div>
-				<div class="col-md-4">
-					<button class="">Play/Pause</button>
-					<button ng-click="session.skipSong()">Next</button>
-				</div>
-			</div>
-
-			<div class="mdl-cell mdl-cell--4-col">
-				
-					<h3>Playlist</h3>
-					<div class="song" ng-repeat="song in session.songList | orderBy: '-votes'">
-					<div class="mdl-grid mdl-card mdl-shadow--2dp">
-						<div class="mdl-cell mdl-cell--2-col">
-							<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="session.removeVote(song)"><i class="material-icons">remove</i></button>
+		    	<div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">								<div>
+		    			<div class="col-xs-4 nospace thumb">
+							<img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>								
 						</div>
-						<div class="mdl-cell mdl-cell--5-col song-info">							
+						<div class="col-xs-8 nospace">							
 							<p><i class="material-icons">music_note</i>{{song.name}}</p>
 							<p><i class="material-icons">person</i>{{song.artist}}</p>
 							<p><i class="material-icons">star</i>{{song.votes}}</p>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col">
-							<img style="width:100%;" src="{{song.thumb}}"/>						
-						</div>
-						<div class="mdl-cell mdl-cell--2-col">
-							<button class=" mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="session.addVote(song)"><i class="material-icons">add</i></button>
-						</div>
+						</div>			
+						<div class="clearfix"></div>			
+					</div>
+					<div >						
+						<button class="col-xs-6" ng-click="session.removeVote(song)"><i class="fa fa-chevron-down"></i></button>
+						<button class="col-xs-6" ng-click="session.addVote(song)"><i class="fa fa-chevron-up"></i></button>
+						<div class="clearfix"></div>
 					</div>
 				</div>
-			</div>			
+				
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="search-container">
+		    	<i id="search-icon" class="fa fa-search fa-inverse"></i>
+		    	<input placeholder="Search" id="search" type="text" ng-model="query" ng-keyup="$event.keyCode == 13 && session.searchSongs(query) && session.hideElement('#search-empty')">
 
-			<div class="mdl-cell mdl-cell--4-col">
-				<h3>Add Song</h3>
-				<input type="text" ng-model="query">
-				<button ng-click="searchResult = session.searchSongs(query)">Search</button>
-				<div class="song" ng-repeat="song in searchResult">
-
-					<div class="mdl-grid mdl-card mdl-shadow--2dp">						
-						<div class="mdl-cell mdl-cell--5-col song-info">							
-							<p><i class="material-icons">music_note</i>{{song.name}}</p>
-							<p><i class="material-icons">person</i>{{song.artist}}</p>							
-						</div>
-						<div class="mdl-cell mdl-cell--3-col">
+		    	<div id="search-empty">
+					<i class="fa fa-search fa-inverse"></i>
+					<strong>Search you favorite song</strong>
+					<p>Add it to the playlist</p>
+				</div>
+				<!--<button ng-click="searchResult = session.searchSongs(query)">Search</button>-->
+				
+				<div class="song search" ng-repeat="song in session.searchResults">					
+					<div>
+						<div class="col-xs-3 nospace thumb">
 							<img style="width:100%;" src="{{song.thumb}}"/>						
 						</div>
-						<div class="mdl-cell mdl-cell--2-col">
-							<button class=" mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="session.addSong(song)"><i class="material-icons">add</i></button>
+						<div class="col-xs-8 nospace">							
+							<p><i class="material-icons">music_note</i>{{song.name}}</p>
+							<p><i class="material-icons">person</i>{{song.artist}}</p>							
+						</div>						
+						<div class="col-xs-1 nospace add-song">
+							<button ng-click="session.addSong(song)"><i class="material-icons">add</i></button>		
 						</div>
-					</div>				
-				</div>							  
-			</div>
-
+						<div class="clearfix"></div>
+					</div>					
+				</div>
+		    </div>	
 		</div>
-
-		
+		<nav id="now-playing" class="navbar navbar-default navbar-fixed-bottom">
+		  <div class="nospace">
+		    	<div class="col-xs-8 nospace">
+			    	<div id="dz-root"></div>
+					<div id="player" style="width:80%;" align="center"></div>
+					<button class="next-button" ng-click="session.skipSong()"><i class="fa fa-step-forward"></i></button>
+				</div>
+				<div class="col-xs-4 nospace">					
+					<img  src="{{session.currentSong.thumb}}"/>				
+				</div>
+				<div class="clearfix"></div>
+		  </div>
+		</nav>
 		<script src="https://cdns-files.deezer.com/js/min/dz.js"></script>
 		<script type="text/javascript" src="player.js"></script>
 	</body>
