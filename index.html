@@ -27,8 +27,8 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="css/loader.css"/>
 	</head>
-	<body id="session" ng-controller="SessionCtrl as session">		
-		<div ng-show="session.firebaseObject['$value'] === undefined" class="cssload-container">
+	<body id="session" ng-controller="SessionCtrl as session">	
+		<div ng-show="session.showLoader" class="cssload-container">
 			<div class="cssload-shaft1"></div>
 			<div class="cssload-shaft2"></div>
 			<div class="cssload-shaft3"></div>
