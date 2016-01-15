@@ -25,8 +25,22 @@
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/loader.css"/>
 	</head>
-	<body id="session" ng-controller="SessionCtrl as session">
+	<body id="session" ng-controller="SessionCtrl as session">		
+		<div ng-show="session.firebaseObject['$value'] === undefined" class="cssload-container">
+			<div class="cssload-shaft1"></div>
+			<div class="cssload-shaft2"></div>
+			<div class="cssload-shaft3"></div>
+			<div class="cssload-shaft4"></div>
+			<div class="cssload-shaft5"></div>
+			<div class="cssload-shaft6"></div>
+			<div class="cssload-shaft7"></div>
+			<div class="cssload-shaft8"></div>
+			<div class="cssload-shaft9"></div>
+			<div class="cssload-shaft10"></div>
+			<p class="loading-text">Conecting...</p>
+		</div>
 		<nav id="menu" class="navbar navbar-default navbar-static-top">		  
 		     <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active col-xs-6"><a class="ripple" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playlist</a></li>

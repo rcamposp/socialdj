@@ -1,10 +1,11 @@
 var app = angular.module('socialdjApp',["firebase"]);
 
-app.controller('SessionCtrl',['$http', '$firebaseArray' , function($http, $firebaseArray){	
+app.controller('SessionCtrl',['$http', '$firebaseArray', '$firebaseObject' , function($http, $firebaseArray, $firebaseObject){	
 	var ref = new Firebase("https://socialdj.firebaseio.com/songList");
+	var obj = $firebaseObject(ref);			
 
+	this.firebaseObject = obj; //When this is loaded, the loading animation disappears
 	this.songList = $firebaseArray(ref);
-
 	//this.songList = demo_data;	
 	this.searchSongList = {};
 	this.searchResults = {};
