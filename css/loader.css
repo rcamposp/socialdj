@@ -13,6 +13,8 @@
     margin: 0;
     background-color: #333;
     z-index: 1011;
+    background-image: url('../image/bg.jpg');
+    background-
 }
 .cssload-container > div {
 	float: left;
@@ -24,9 +26,11 @@
 }
 
 .loading-text{
+	color: #000;
+	font-size: 25px;
+	margin-top: 10%;
 	text-align: center;
-    position: relative;
-    top: 70%;
+    position: relative;    
 }
 
 .cssload-container > div {
