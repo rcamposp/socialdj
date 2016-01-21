@@ -1,17 +1,7 @@
-http://www.getmdl.io/
-http://developers.deezer.com/myapps/app/162605
-https://www.google.com/design/icons/
+http://developers.deezer.com/
 
-Diseño
+
+TODO
 ------------------
-Responsive
-Diseño now playing
-Diseño add song (caja de busqueda)
-Logo
-
-
-Funcionalidades
-------------------
-Cargar siguiente canción cuando una se termina
-Sesion reproduccion (admin) / Sesion participante (solo votos)
-Borrar cancion
+Multiple sessions (users should get their own API key)
+Limit votes per user
