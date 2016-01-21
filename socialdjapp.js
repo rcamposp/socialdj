@@ -1,10 +1,25 @@
-var app = angular.module('socialdjApp',[]);
+var app = angular.module('socialdjApp',["firebase"]);
 
-app.controller('SessionCtrl',['$http', function($http){	
-	this.songList = {};	
+app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObject' , function($scope, $http, $firebaseArray, $firebaseObject){	
+	var ref = new Firebase("https://socialdj.firebaseio.com/songList");
+	var obj = $firebaseObject(ref);			
+
+	this.firebaseObject = obj; //When this is loaded, the loading animation disappears
+	this.songList = $firebaseArray(ref);
+	this.showLoader = true;
+	var obj = $firebaseObject(ref);
+	obj.$loaded(
+	  function(data) {	    	  	
+	    $scope.session.showLoader = false;	    
+	  },
+	  function(error) {
+	    console.error("Error:", error);
+	  }
+	);
+	//this.songList = demo_data;	
 	this.searchSongList = {};
 	this.searchResults = {};
-	this.currentSong = {};
+	this.currentSong = {};	
 
 	this.searchSongs = function(query){				
 		var results = this;
@@ -14,13 +29,12 @@ app.controller('SessionCtrl',['$http', function($http){
 		    data = dataResult.data;
 		    
 		    for(i=0;i<data.length;i++){
-		    	results.searchSongList.push({
-		    		id 			: 0, 
+		    	results.searchSongList.push({		    		
 		    		name		: data[i].title,
 		    		artist		: data[i].artist.name,
 		    		thumb 		: data[i].album.cover_medium,
 		    		votes 		: 1,
-		    		playerid	: data[i].id,
+		    		playerid	: data[i].id,		    		
 		    	});
 		    }		    
 		    results.searchResults = results.searchSongList;
@@ -33,15 +47,23 @@ app.controller('SessionCtrl',['$http', function($http){
 		  return results.searchSongList;
 	};
 
-	this.addVote = function(song){
-		song.votes = song.votes + 1;
-		window.app.updateSong(song);
+	this.addVote = function(song){		
+		index = this.songList.$indexFor(song.$id);
+		if(index != -1){
+			song.votes = song.votes + 1;
+			this.songList.$save(index).then(function(ref){
+				console.log("vote added");
+			});
+		}
 	}
 
 	this.removeVote = function(song){
-		if(song.votes > 0){
-			song.votes = song.votes - 1;	
-			window.app.updateSong(song);
+		index = this.songList.$indexFor(song.$id);
+		if(index != -1){
+			song.votes = song.votes - 1;
+			this.songList.$save(index).then(function(ref){
+				console.log("vote removed");
+			});
 		}
 	}
 
@@ -49,35 +71,40 @@ app.controller('SessionCtrl',['$http', function($http){
 		window.app.getSong(song);
 	}
 
-	this.addSong = function(song){	
-		isOnList = this.getIndexOfSong(song);			
-		if(!isOnList){
-			this.songList.push(song);			
-			window.app.addSong(song);
-			//Remove song from the search results so you can't add it again.
-			var index = this.searchSongList.indexOf(song);
-	  		this.searchSongList.splice(index, 1); 
-		}else{
-			alert("Song is already on list! A vote has been added.");
-			this.addVote(song);
-		}		
+	this.addSong = function(song){
+		song = angular.copy(song);		
+		controllerInstance = this;		
+		this.songList.$ref().orderByChild("playerid").equalTo(song.playerid).once("value", function(dataSnapshot){
+	        var playerid = dataSnapshot.val();	        
+	        if(dataSnapshot.exists()){
+	          	alert("Song is already on list! A vote has been added.");
+				controllerInstance.addVote(song);
+	        } else {	        	
+	        	controllerInstance.songList.$add(song);
+				//Remove song from the search results so you can't add it again.
+				var index = controllerInstance.searchSongList.indexOf(song);
+	  			controllerInstance.searchSongList.splice(index, 1); 
+	        }
+	    })		
 	}
 
-	this.deleteSong = function(song){
-		index = this.getIndexOfSong(song);
-		this.songList.splice(index,1);
-		window.app.deleteSong(song);
+	this.deleteSong = function(song){		
+		index = this.songList.$indexFor(song.$id);
+		var item = this.songList[index];
+		this.songList.$remove(item).then(function(ref) {
+		  //console.log(ref.key() === item.$id); // true
+		});
 	}
 
 	//Check if song is already on the list and returns the index. If not on list. returns false.
-	this.getIndexOfSong = function(song){
-		var isOnList = false;
+	this.isOnList = function(song){
+		var onlist = false;
 		for(i = 0; i < this.songList.length; i++){
 			if(this.songList[i].name === song.name){
-				isOnList = i;
+				onlist = i;
 			}
 		}
-		return isOnList;
+		return onlist;
 	};
 
 	this.skipSong = function(){
@@ -89,7 +116,7 @@ app.controller('SessionCtrl',['$http', function($http){
 				index = i;
 			}
 		}				
-		console.log(this.currentSong);
+		
 		this.currentSong = songWithMostVotes;
 		
 		if(Object.keys(this.currentSong).length !== 0){			
