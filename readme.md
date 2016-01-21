@@ -1,3 +1,5 @@
+[![Stories in Ready](https://badge.waffle.io/rcamposp/socialdj.svg?label=ready&title=Ready)](http://waffle.io/rcamposp/socialdj)
+
 http://developers.deezer.com/
 
 
