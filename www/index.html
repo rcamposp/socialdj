@@ -35,8 +35,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />  
 
   </head>
-  <body id="session" ng-controller="SessionCtrl as session">  
-
+  <body id="session" ng-controller="SessionCtrl as session">    
     <ion-pane>
       <ion-header-bar class="bar-stable">
         <nav id="menu" class="navbar navbar-default navbar-static-top">     
@@ -46,7 +45,7 @@
           </ul>     
         </nav>
       </ion-header-bar>
-      <ion-content>
+      <ion-content overflow-scroll="true">
         <div ng-show="session.showLoader" class="cssload-container">
       <div class="cssload-shaft1"></div>
       <div class="cssload-shaft2"></div>
@@ -69,17 +68,18 @@
           <strong>The playlist is empty :(</strong>
           <p>Go to the "Add Song" tab to start playing some music.</p>
         </div>
-          <div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">                <div>
+          <div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">                    
+            <div>              
+              <div class="col-xs-8 nospace">              
+                <p><i class="fa fa-music"></i>{{song.name}}</p>
+                <p><i class="fa fa-user"></i>{{song.artist}}</p>
+                <p><i class="fa fa-star"></i>{{song.votes}}</p>
+              </div>      
               <div class="col-xs-4 nospace thumb">
-              <img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>               
+                <img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>               
+              </div>
+              <div class="clearfix"></div>      
             </div>
-            <div class="col-xs-8 nospace">              
-              <p><i class="fa fa-music"></i>{{song.name}}</p>
-              <p><i class="fa fa-user"></i>{{song.artist}}</p>
-              <p><i class="fa fa-star"></i>{{song.votes}}</p>
-            </div>      
-            <div class="clearfix"></div>      
-          </div>
           <div >            
             <button class="col-xs-6" ng-click="session.removeVote(song)"><i class="fa fa-chevron-down"></i></button>
             <button class="col-xs-6" ng-click="session.addVote(song)"><i class="fa fa-chevron-up"></i></button>
@@ -101,16 +101,18 @@
         
         <div class="song search" ng-repeat="song in session.searchResults">         
           <div>
+            
             <div class="col-xs-3 nospace thumb">
               <img style="width:100%;" src="{{song.thumb}}"/>           
             </div>
-            <div class="col-xs-8 nospace">              
+            <div class="col-xs-8 nospace song-info">
               <p><i class="fa fa-music"></i>{{song.name}}</p>
               <p><i class="fa fa-user"></i>{{song.artist}}</p>              
             </div>            
             <div class="col-xs-1 nospace add-song">
               <button ng-click="session.addSong(song)"><i class="fa fa-plus"></i></button>   
             </div>
+            
             <div class="clearfix"></div>
           </div>          
         </div>
