@@ -13,12 +13,13 @@
     margin: 0;
     background-color: #333;
     z-index: 1011;
-    background-image: url('../image/bgm.jpg');
+    background-image: url('../img/bgm.jpg');
     background-size: cover;
+    top: 0;
 }
 @media (min-width: 768px){
 	.cssload-container {
-		background-image: url('../image/bg.jpg');
+		background-image: url('../img/bg.jpg');
 	}
 }
 .cssload-container > div {

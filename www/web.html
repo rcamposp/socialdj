@@ -64,45 +64,26 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">                   
           <div id="playlist-empty" ng-show="session.songList.length == 0">
-            <i class="fa fa-music fa-inverse"></i>
-            <strong>The playlist is empty :(</strong>
-            <p>Go to the "Add Song" tab to start playing some music.</p>
-          </div>
-
-          <div id="now-playing" ng-show="session.currentSong.name">    
-            <h4>Now Playing</h4>
-            <div class="song">            
-              <div class="col-xs-8">
-                <p><i class="fa fa-music"></i>{{session.currentSong.name}}</p>
-                <p><i class="fa fa-user"></i>{{session.currentSong.artist}}</p>
+          <i class="fa fa-music fa-inverse"></i>
+          <strong>The playlist is empty :(</strong>
+          <p>Go to the "Add Song" tab to start playing some music.</p>
+        </div>
+          <div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">                    
+            <div>              
+              <div class="col-xs-8 nospace">              
+                <p><i class="fa fa-music"></i>{{song.name}}</p>
+                <p><i class="fa fa-user"></i>{{song.artist}}</p>
+                <p><i class="fa fa-star"></i>{{song.votes}}</p>
+              </div>      
+              <div class="col-xs-4 nospace thumb">
+                <img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>               
               </div>
-              <div class="col-xs-4 nospace">          
-                <img src="{{session.currentSong.thumb}}"/>            
-              </div>
-              <div class="clearfix"></div>
+              <div class="clearfix"></div>      
             </div>
-          </div>
-
-          
-          <div id="play-queue" ng-show="session.songList.length > 0">
-            <h4>Play Queue</h4>
-            <div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">                    
-              <div>              
-                <div class="col-xs-8 nospace">              
-                  <p><i class="fa fa-music"></i>{{song.name}}</p>
-                  <p><i class="fa fa-user"></i>{{song.artist}}</p>
-                  <p><i class="fa fa-star"></i>{{song.votes}}</p>
-                </div>      
-                <div class="col-xs-4 nospace thumb">
-                  <img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>               
-                </div>
-                <div class="clearfix"></div>      
-              </div>
-            <div >            
-              <button class="col-xs-6" ng-click="session.removeVote(song)"><i class="fa fa-chevron-down"></i></button>
-              <button class="col-xs-6" ng-click="session.addVote(song)"><i class="fa fa-chevron-up"></i></button>
-              <div class="clearfix"></div>
-            </div>
+          <div >            
+            <button class="col-xs-6" ng-click="session.removeVote(song)"><i class="fa fa-chevron-down"></i></button>
+            <button class="col-xs-6" ng-click="session.addVote(song)"><i class="fa fa-chevron-up"></i></button>
+            <div class="clearfix"></div>
           </div>
         </div>
         
@@ -135,10 +116,35 @@
             <div class="clearfix"></div>
           </div>          
         </div>
-
-
         </div>  
-    </div>    
+    </div>
+    <nav id="now-playing" class="navbar navbar-default navbar-fixed-bottom">
+      <!--Mobile (Show current song)-->
+      <div class="visible-sm visible-xs nospace">          
+        <div class="col-xs-4 nospace">          
+          <img src="{{session.currentSong.thumb}}"/>            
+        </div>
+        <div class="col-xs.8">
+          <p>{{session.currentSong.name}}</p>
+          <p>{{session.currentSong.artist}}</p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <!--Desktop (Playback)-->
+      <div class="hidden-sm hidden-xs nospace">
+          <div class="col-xs-8 nospace">
+            <div id="dz-root"></div>
+          <div id="player" style="width:80%;" align="center"></div>
+          <button class="next-button" ng-click="session.skipSong()"><i class="fa fa-step-forward"></i></button>
+        </div>
+        <div class="col-xs-4 nospace">          
+          <img  src="{{session.currentSong.thumb}}"/>       
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </nav>
+      <script src="https://cdns-files.deezer.com/js/min/dz.js"></script>
+      <script type="text/javascript" src="js/player.js"></script>
       </ion-content>
     </ion-pane>
   </body>
