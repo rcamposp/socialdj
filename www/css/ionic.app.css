@@ -9731,7 +9731,14 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-body {
+/*Ionic Resets*/
+#top-bar {
+  padding: 0; }
+
+#menu {
+  width: 100%; }
+
+body, ion-content {
   font-family: 'Roboto', sans-serif;
   background-color: #333;
   color: #fff; }
@@ -9888,8 +9895,10 @@ body {
 #search-empty strong, #search-empty i, #search-empty p, #playlist-empty strong, #playlist-empty i, #playlist-empty p {
   display: block; }
 
-#search-container > div:last-of-type {
-  margin-bottom: 90px; }
+#search-container {
+  margin-top: 30px; }
+  #search-container > div:last-of-type {
+    margin-bottom: 90px; }
 
 #now-playing #now-playing-title {
   text-align: center;

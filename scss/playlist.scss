@@ -1,4 +1,10 @@
-body{ 
+/*Ionic Resets*/
+    #top-bar{
+    	padding: 0;
+	}
+	#menu{width: 100%;}
+
+body, ion-content{ 
 	font-family: 'Roboto', sans-serif;
 	background-color: #333;
 	color: #fff;
@@ -193,8 +199,12 @@ body{
 	display: block;
 }
 
-#search-container > div:last-of-type{
-	margin-bottom: 90px;
+#search-container{
+	margin-top: 30px;
+	
+	& > div:last-of-type{	
+		margin-bottom: 90px;
+	}
 }
 
 #now-playing{ 

@@ -1,4 +1,4 @@
-var app = angular.module('socialdjApp',["firebase"]);
+var app = angular.module('socialdjApp',["firebase","ionic"]);
 
 app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObject' , function($scope, $http, $firebaseArray, $firebaseObject){	
 	var ref = new Firebase("https://socialdj.firebaseio.com/songList");
@@ -39,6 +39,9 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 		    	});
 		    }		    
 		    results.searchResults = results.searchSongList;
+		    document.activeElement.blur(); //Change input focus so it closes the phones keyboard
+		    //cordova.plugins.Keyboard.close();
+
 		    return results;
 		  }).
 		  error(function(data, status, headers, config) {
@@ -147,7 +150,5 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 
 	this.hideElement = function(element){
 		$(element).addClass("hide");		
-	};
-
+	};	
 }]);
-
