@@ -73,12 +73,9 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 	}
 
 	this.addSong = function(song){
-		function removeSongFromSearchList(song){
-
-		}
-
 		song = angular.copy(song);		
-		controllerInstance = this;		
+		song.timestamp = Date.now();
+		controllerInstance = this;
 		this.songList.$ref().orderByChild("playerid").equalTo(song.playerid).once("value", function(dataSnapshot){
 	        var playerid = dataSnapshot.val();	        
 	        if(dataSnapshot.exists()){
@@ -121,7 +118,7 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 		var songWithMostVotes = {votes:-1};
 		var index = 0;
 		for (i = 0; i < this.songList.length; i++){
-			if(this.songList[i].votes > songWithMostVotes.votes){
+			if(this.songList[i].votes > songWithMostVotes.votes || (this.songList[i].votes == songWithMostVotes.votes && this.songList[i].timestamp < songWithMostVotes.timestamp) ){
 				songWithMostVotes = this.songList[i];
 				index = i;
 			}
@@ -139,11 +136,10 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 
 			console.log("Now playing: "+playlistObject.currentSong.name+" - "+playlistObject.currentSong.artist);
 
-			if(Object.keys(playlistObject.currentSong).length !== 0){			
-				playlistObject.deleteSong(playlistObject.currentSong);
-			}else{
-				playlistObject.songList.splice(index,1);
-			}
+			playlistObject.songList.$remove(songWithMostVotes).then(function(ref) {
+			  console("Now playing deleted from songList");
+			});
+			
 		});				
 	
 		

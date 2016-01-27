@@ -59,11 +59,10 @@
       <div class="cssload-shaft10"></div>
       <p class="loading-text">Loading an awesome playlist!</p>
     </div>
-    
-    
+        
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">                   
-          <div id="playlist-empty" ng-show="session.songList.length == 0">
+          <div id="playlist-empty" ng-show="session.songList.length == 0 && session.currentSong.artist == null">
             <i class="fa fa-music fa-inverse"></i>
             <strong>The playlist is empty :(</strong>
             <p>Go to the "Add Song" tab to start playing some music.</p>
@@ -90,12 +89,12 @@
 
           
           <div id="play-queue" ng-show="session.songList.length > 0">            
-            <div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">                    
+            <div class="song" ng-repeat="song in session.songList  |  orderBy:['-votes','timestamp']">                    
               <div>              
                 <div class="col-xs-8 nospace">              
-                  <p><i class="fa fa-music"></i>{{song.name}}</p>
-                  <p><i class="fa fa-user"></i>{{song.artist}}</p>
-                  <p><i class="fa fa-star"></i>{{song.votes}}</p>
+                  <p><i class="fa fa-music"></i>{{song.name | limitTo: 65}} {{song.name.length > 65 ? "..." : ""}}</p>
+                  <p><i class="fa fa-user"></i>{{song.artist | limitTo: 65}} {{song.artist.length > 65 ? "..." : ""}}</p>
+                  <p><i class="fa fa-star"></i>{{song.votes}}</p>                  
                 </div>      
                 <div class="col-xs-4 nospace thumb">
                   <img style="width:100%;" src="{{song.thumb}}" ng-click="session.deleteSong(song)"/>               
@@ -125,12 +124,14 @@
         <div class="song search" ng-repeat="song in session.searchResults">         
           <div>
             
-            <div class="col-xs-3 nospace thumb">
-              <img style="width:100%;" src="{{song.thumb}}"/>           
+            <div class="col-xs-3 nospace">
+              <div class="thumb" style="background-image:url('{{song.thumb}}')">
+              <!--<img style="width:100%;" src="{{song.thumb}}"/>-->        
+              </div>
             </div>
             <div class="col-xs-8 nospace song-info">
-              <p><i class="fa fa-music"></i>{{song.name}}</p>
-              <p><i class="fa fa-user"></i>{{song.artist}}</p>              
+              <p><i class="fa fa-music"></i>{{song.name | limitTo: 65}} {{song.name.length > 65 ? "..." : ""}}</p>
+              <p><i class="fa fa-user"></i>{{song.artist | limitTo: 65}} {{song.artist.length > 65 ? "..." : ""}}</p>
             </div>            
             <div class="col-xs-1 nospace add-song">
               <button ng-click="session.addSong(song)"><i class="fa fa-plus"></i></button>   

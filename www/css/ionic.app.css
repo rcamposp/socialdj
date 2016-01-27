@@ -9761,32 +9761,45 @@ body {
       max-width: 124px; }
   .song button i {
     color: #fff; }
+  .song .ng-binding {
+    padding-left: 25px; }
+    .song .ng-binding i {
+      margin-left: -28px;
+      padding-right: 5px;
+      font-size: 15px; }
   .song.search {
     height: 112px;
     padding: 0; }
-    .song.search .thumb img {
-      max-height: 110px;
-      margin-top: 14px; }
-    .song.search .song-info {
-      margin-top: 10px; }
+    .song.search .thumb {
+      height: 110px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      max-width: 110px;
+      background-position: center; }
     .song.search .add-song {
       text-align: right; }
       .song.search .add-song button {
         height: 110px !important;
         box-shadow: none !important; }
+        @media (max-width: 430px) {
+          .song.search .add-song button i {
+            padding-left: 0px; } }
+    .song.search > div {
+      display: flex;
+      align-items: center; }
 
 .dark-icon {
   color: #111; }
 
 .next-button {
   height: 62px;
-  margin-top: 8px;
+  margin-top: 0px;
   background-color: #32323A;
   color: #fff;
   border: 1px solid #222;
   border-left: none;
   float: left;
-  margin-left: -9px;
+  margin-left: 0px;
   position: relative; }
 
 #player {
@@ -9890,3 +9903,11 @@ body {
     display: inline-block; }
   #now-playing #now-playing-title i {
     padding-left: 0; }
+
+#now-playing-web {
+  background: #333; }
+  #now-playing-web .player-controls {
+    display: flex;
+    justify-content: flex-start; }
+  #now-playing-web #player iframe {
+    width: 100% !important; }

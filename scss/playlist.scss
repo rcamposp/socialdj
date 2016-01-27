@@ -1,10 +1,10 @@
-body{
+body{ 
 	font-family: 'Roboto', sans-serif;
 	background-color: #333;
 	color: #fff;
 }
 
-.song {
+.song { 
     width: 100%;
     margin-bottom: 10px;
     min-height: 0;    
@@ -39,24 +39,41 @@ body{
 		color: #fff;
 	}	
 
+	.ng-binding{
+		padding-left: 25px;
+		i{
+			margin-left: -28px;
+    		padding-right: 5px;
+    		font-size: 15px;
+		}
+	}
 
 	&.search{
 		height: 112px;
 		padding: 0;
 
-		.thumb img{    
-			max-height: 110px; 
-			margin-top: 14px;
-		}
-		.song-info{
-			margin-top: 10px;
-		}
+		.thumb{ 
+		    height: 110px;
+		    background-size: cover;
+		    background-repeat: no-repeat;
+		    max-width: 110px;
+		    background-position: center
+		}		
 		.add-song{
 			text-align: right;
 			button{
 				height: 110px !important;
 			    box-shadow: none !important;
+			    @media(max-width:430px){
+			    	i{
+			    		padding-left: 0px;
+			    	}	
+			    }			    
 			}
+		}
+		>div{
+			display: flex;
+    		align-items: center;
 		}
 	}	
 }
@@ -64,16 +81,16 @@ body{
 .dark-icon{
 	color: #111;
 }
-
+ 
 .next-button{
 	height: 62px;
-    margin-top: 8px;
+    margin-top: 0px;
     background-color: #32323A;
     color: #fff;
     border: 1px solid #222;
     border-left: none;
     float: left;
-    margin-left: -9px;
+    margin-left: 0px;
     position: relative;
 }
 
@@ -195,6 +212,16 @@ body{
 		i{
 		    padding-left: 0;	
 		}
-	}
+	}	
+}
 
+#now-playing-web{
+	background: #333; 
+	.player-controls{
+		display: flex;
+    	justify-content: flex-start;
+	}
+	#player iframe{
+		width: 100% !important;
+	}
 }

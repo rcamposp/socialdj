@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/loader.css"/>    
-    <link rel="stylesheet" type="text/css" href="css/style.css" />  
+    <link rel="stylesheet" type="text/css" href="css/ionic.app.min.css"/>  
 
   </head>
   <body id="session" ng-controller="SessionCtrl as session">    
@@ -102,8 +102,10 @@
         <div class="song search" ng-repeat="song in session.searchResults">         
           <div>
             
-            <div class="col-xs-3 nospace thumb">
-              <img style="width:100%;" src="{{song.thumb}}"/>           
+            <div class="col-xs-3 nospace">
+              <div class="thumb" style="background-image:url('{{song.thumb}}')">
+              <!--<img style="width:100%;" src="{{song.thumb}}"/>-->        
+              </div>
             </div>
             <div class="col-xs-8 nospace song-info">
               <p><i class="fa fa-music"></i>{{song.name}}</p>
@@ -118,28 +120,14 @@
         </div>
         </div>  
     </div>
-    <nav id="now-playing" class="navbar navbar-default navbar-fixed-bottom">
-      <!--Mobile (Show current song)-->
-      <div class="visible-sm visible-xs nospace">          
-        <div class="col-xs-4 nospace">          
-          <img src="{{session.currentSong.thumb}}"/>            
-        </div>
-        <div class="col-xs.8">
-          <p>{{session.currentSong.name}}</p>
-          <p>{{session.currentSong.artist}}</p>
-        </div>
-        <div class="clearfix"></div>
-      </div>
+    <nav id="now-playing-web" class="navbar navbar-default navbar-fixed-bottom">
       <!--Desktop (Playback)-->
-      <div class="hidden-sm hidden-xs nospace">
-          <div class="col-xs-8 nospace">
+      <div class="nospace">
+          <div class="col-xs-12 nospace player-controls">
             <div id="dz-root"></div>
-          <div id="player" style="width:80%;" align="center"></div>
+          <div id="player"></div>
           <button class="next-button" ng-click="session.skipSong()"><i class="fa fa-step-forward"></i></button>
-        </div>
-        <div class="col-xs-4 nospace">          
-          <img  src="{{session.currentSong.thumb}}"/>       
-        </div>
+        </div>        
         <div class="clearfix"></div>
       </div>
     </nav>

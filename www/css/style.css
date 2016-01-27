@@ -9639,9 +9639,6 @@ body {
   padding: 0;
   margin: 0; }
 
-#home > div:last-of-type {
-  margin-bottom: 88px; }
-
 #search {
   border: none;
   border-bottom: 2px solid #FF6E40;
@@ -9672,5 +9669,18 @@ body {
 
 #search-container > div:last-of-type {
   margin-bottom: 90px; }
+
+#now-playing #now-playing-title {
+  text-align: center;
+  color: #fff;
+  margin: 0 auto;
+  width: 150px;
+  border-bottom: solid 1px;
+  margin-bottom: 15px; }
+  #now-playing #now-playing-title h4 {
+    color: #fff;
+    display: inline-block; }
+  #now-playing #now-playing-title i {
+    padding-left: 0; }
 
 /*# sourceMappingURL=style.css.map */

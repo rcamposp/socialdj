@@ -4,8 +4,8 @@ DZ.init({
     channelUrl : 'localhost',
     player: {
       container: 'player',
-      width : "100%",
-      height : 70,
+      width : 320,
+      height : 62,
       onload : function(){}
     }
   });
