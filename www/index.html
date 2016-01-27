@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/loader.css"/>    
-    <link rel="stylesheet" type="text/css" href="css/style.css" />  
+    <link rel="stylesheet" type="text/css" href="css/ionic.app.min.css"/>    
 
   </head>
   <body id="session" ng-controller="SessionCtrl as session">    
@@ -70,22 +70,26 @@
           </div>
 
           <div id="now-playing" ng-show="session.currentSong.name">    
-            <h4>Now Playing</h4>
-            <div class="song">            
-              <div class="col-xs-8">
+            
+            <div class="song">
+              <div id="now-playing-title">
+                <i class="fa fa-play"></i>
+                <h4>Now Playing</h4>
+              </div>
+              <div class="col-xs-8 nospace">
                 <p><i class="fa fa-music"></i>{{session.currentSong.name}}</p>
                 <p><i class="fa fa-user"></i>{{session.currentSong.artist}}</p>
               </div>
-              <div class="col-xs-4 nospace">          
+              <div class="col-xs-4 nospace thumb">          
                 <img src="{{session.currentSong.thumb}}"/>            
               </div>
               <div class="clearfix"></div>
             </div>
+
           </div>
 
           
-          <div id="play-queue" ng-show="session.songList.length > 0">
-            <h4>Play Queue</h4>
+          <div id="play-queue" ng-show="session.songList.length > 0">            
             <div class="song" ng-repeat="song in session.songList  | orderBy: '-votes'">                    
               <div>              
                 <div class="col-xs-8 nospace">              

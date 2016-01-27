@@ -17,7 +17,7 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 	    console.error("Error:", error);
 	  }
 	);
-	//this.songList = demo_data;	
+	
 	this.searchSongList = {};
 	this.searchResults = {};
 	this.currentSong = $firebaseObject(currentSongRef);	
@@ -73,6 +73,10 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 	}
 
 	this.addSong = function(song){
+		function removeSongFromSearchList(song){
+
+		}
+
 		song = angular.copy(song);		
 		controllerInstance = this;		
 		this.songList.$ref().orderByChild("playerid").equalTo(song.playerid).once("value", function(dataSnapshot){
@@ -81,13 +85,18 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 	          	alert("Song is already on list! A vote has been added.");
 				controllerInstance.addVote(song);
 	        } else {	        	
-	        	controllerInstance.songList.$add(song);
+	        	controllerInstance.songList.$add(song);	        	
 				//Remove song from the search results so you can't add it again.
-				var index = controllerInstance.searchSongList.indexOf(song);
-	  			controllerInstance.searchSongList.splice(index, 1); 
+				index=-1;
+				for(i = 0; i < $scope.session.searchSongList.length; i++){
+					if($scope.session.searchSongList[i].name === song.name){
+						index = i;
+					}
+				}				
+	  			$scope.session.searchSongList.splice(index, 1); 
 	        }
 	    })		
-	}
+	}	
 
 	this.deleteSong = function(song){		
 		index = this.songList.$indexFor(song.$id);
@@ -136,15 +145,7 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 				playlistObject.songList.splice(index,1);
 			}
 		});				
-
-		
-			
-		
-		//borrada = this.songList.splice(index,1);			
-		//console.log(borrada);
-		
-
-		
+	
 		
 	};
 
