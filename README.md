@@ -1,9 +1,9 @@
 # socialdj
 Build a playlist socially wherever you are! 
 
-1. Download this Vagrant Box: https://github.com/driftyco/ionic-box
+1 Download this Vagrant Box: https://github.com/driftyco/ionic-box
 
-2. git clone this repo
+2 git clone this repo
 
 3.1 (Linux) ionic setup sass
 
@@ -15,7 +15,7 @@ Build a playlist socially wherever you are!
     
     -gulp watch
   
-4. ionic serve --address 0.0.0.0 
+4 ionic serve --address 0.0.0.0 
 
 5.1 Follow this to build APK: https://forum.ionicframework.com/t/ionic-toturial-for-building-a-release-apk/15758
 
@@ -28,8 +28,8 @@ Build a playlist socially wherever you are!
     key.alias=YourApp
     key.alias.password=
 
-5.2. ionic build --release
+5.2 ionic build --release
 
-6. Copy APK to phone/tablet located in: .../platforms/android/build/outputs/apk
+6 Copy APK to phone/tablet located in: .../platforms/android/build/outputs/apk
 
-7. Enjoy =)
+7 Enjoy =)
