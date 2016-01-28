@@ -9743,6 +9743,9 @@ body, ion-content {
   background-color: #333;
   color: #fff; }
 
+#home > div:last-of-type {
+  margin-bottom: 60px; }
+
 .song {
   width: 100%;
   margin-bottom: 10px;
@@ -9789,8 +9792,13 @@ body, ion-content {
         height: 110px !important;
         box-shadow: none !important; }
         @media (max-width: 430px) {
-          .song.search .add-song button i {
-            padding-left: 0px; } }
+          .song.search .add-song button {
+            padding-right: 0;
+            padding-left: 0px;
+            text-align: center;
+            width: 100%; }
+            .song.search .add-song button i {
+              padding: 0px; } }
     .song.search > div {
       display: flex;
       align-items: center; }
@@ -9909,14 +9917,26 @@ body, ion-content {
   margin-bottom: 15px; }
   #now-playing #now-playing-title h4 {
     color: #fff;
-    display: inline-block; }
+    display: inline-block;
+    font-size: 17px; }
   #now-playing #now-playing-title i {
-    padding-left: 0; }
+    padding-left: 0;
+    font-size: 17px; }
 
-#now-playing-web {
-  background: #333; }
-  #now-playing-web .player-controls {
-    display: flex;
-    justify-content: flex-start; }
-  #now-playing-web #player iframe {
-    width: 100% !important; }
+#search-songs-loader {
+  text-align: center;
+  margin-top: 30px; }
+  #search-songs-loader svg {
+    width: 130px;
+    height: 130px; }
+
+/*Web App*/
+.web-app {
+  padding-bottom: 30px; }
+  .web-app #now-playing-web {
+    background: #333; }
+    .web-app #now-playing-web .player-controls {
+      display: flex;
+      justify-content: flex-start; }
+    .web-app #now-playing-web #player iframe {
+      width: 100% !important; }

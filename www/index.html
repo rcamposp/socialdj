@@ -91,8 +91,8 @@
             <div class="song" ng-repeat="song in session.songList  |  orderBy:['-votes','timestamp']">                    
               <div>              
                 <div class="col-xs-8 nospace">              
-                  <p><i class="fa fa-music"></i>{{song.name | limitTo: 65}} {{song.name.length > 65 ? "..." : ""}}</p>
-                  <p><i class="fa fa-user"></i>{{song.artist | limitTo: 65}} {{song.artist.length > 65 ? "..." : ""}}</p>
+                  <p><i class="fa fa-music"></i>{{song.name | limitTo: 60}} {{song.name.length > 60 ? "..." : ""}}</p>
+                  <p><i class="fa fa-user"></i>{{song.artist | limitTo: 60}} {{song.artist.length > 60 ? "..." : ""}}</p>
                   <p><i class="fa fa-star"></i>{{song.votes}}</p>                  
                 </div>      
                 <div class="col-xs-4 nospace thumb">
@@ -112,14 +112,16 @@
         <div role="tabpanel" class="tab-pane" id="search-container">
           <i id="search-icon" class="fa fa-search fa-inverse"></i>
           <input placeholder="Search" id="search" type="text" ng-model="query" ng-keyup="$event.keyCode == 13 && session.searchSongs(query) && session.hideElement('#search-empty')">
-          <ion-spinner icon="spiral" class="spinner-energized"></ion-spinner>
+          <div id="search-songs-loader" ng-show="session.showSearchResultsLoader">
+            <ion-spinner icon="lines" class="spinner-assertive"></ion-spinner>
+          </div>
           <div id="search-empty">
             <i class="fa fa-search fa-inverse"></i>
             <strong>Search you favorite song</strong>
             <p>Add it to the playlist</p>
           </div>
         <!--<button ng-click="searchResult = session.searchSongs(query)">Search</button>-->
-        
+        <div ng-show="!session.showSearchResultsLoader">
         <div class="song search" ng-repeat="song in session.searchResults">         
           <div>
             
@@ -129,8 +131,8 @@
               </div>
             </div>
             <div class="col-xs-8 nospace song-info">
-              <p><i class="fa fa-music"></i>{{song.name | limitTo: 65}} {{song.name.length > 65 ? "..." : ""}}</p>
-              <p><i class="fa fa-user"></i>{{song.artist | limitTo: 65}} {{song.artist.length > 65 ? "..." : ""}}</p>
+              <p><i class="fa fa-music"></i>{{song.name | limitTo: 60}} {{song.name.length > 60 ? "..." : ""}}</p>
+              <p><i class="fa fa-user"></i>{{song.artist | limitTo: 60}} {{song.artist.length > 60 ? "..." : ""}}</p>
             </div>            
             <div class="col-xs-1 nospace add-song">
               <button ng-click="session.addSong(song)"><i class="fa fa-plus"></i></button>   
@@ -139,7 +141,7 @@
             <div class="clearfix"></div>
           </div>          
         </div>
-
+        </div> 
 
         </div>  
     </div>    

@@ -10,6 +10,12 @@ body, ion-content{
 	color: #fff;
 }
 
+#home{ 
+	& > div:last-of-type{
+		margin-bottom: 60px;
+	}
+}
+
 .song { 
     width: 100%;
     margin-bottom: 10px;
@@ -71,8 +77,12 @@ body, ion-content{
 				height: 110px !important;
 			    box-shadow: none !important;
 			    @media(max-width:430px){
+		    	    padding-right: 0;
+				    padding-left: 0px;
+				    text-align: center;
+				    width: 100%;
 			    	i{
-			    		padding-left: 0px;
+			    		padding: 0px;
 			    	}	
 			    }			    
 			}
@@ -218,20 +228,37 @@ body, ion-content{
 		h4{ 
 			color: #fff;		
 			display: inline-block;
+			font-size: 17px;
 		}	
 		i{
 		    padding-left: 0;	
+		    font-size: 17px;
 		}
 	}	
 }
+ 
+#search-songs-loader{
+	text-align: center;
+	margin-top: 30px;
+	svg{
+		width: 130px;
+		height: 130px;
+	}	
+}
 
-#now-playing-web{
-	background: #333; 
-	.player-controls{
-		display: flex;
-    	justify-content: flex-start;
-	}
-	#player iframe{
-		width: 100% !important;
-	}
+
+/*Web App*/
+
+.web-app{
+	padding-bottom: 30px;
+	#now-playing-web{
+		background: #333; 
+		.player-controls{
+			display: flex;
+	    	justify-content: flex-start;
+		}
+		#player iframe{
+			width: 100% !important;
+		}
+	}	
 }

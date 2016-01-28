@@ -8,6 +8,7 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 	this.firebaseObject = obj; //When this is loaded, the loading animation disappears
 	this.songList = $firebaseArray(ref);
 	this.showLoader = true;
+	this.showSearchResultsLoader = false;
 	var obj = $firebaseObject(ref);
 	obj.$loaded(
 	  function(data) {	    	  	
@@ -24,7 +25,8 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 
 	this.searchSongs = function(query){				
 		var results = this;
-		results.searchSongList = [];				
+		results.searchSongList = [];			
+		this.showSearchResultsLoader = true;	
 		$http.jsonp('http://api.deezer.com/search?callback=JSON_CALLBACK&output=jsonp&q='+query).
 		  success(function(dataResult, status, headers, config) {
 		    data = dataResult.data;
@@ -39,6 +41,7 @@ app.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObj
 		    	});
 		    }		    
 		    results.searchResults = results.searchSongList;
+		    results.showSearchResultsLoader = false;
 		    document.activeElement.blur(); //Change input focus so it closes the phones keyboard
 		    //cordova.plugins.Keyboard.close();
 

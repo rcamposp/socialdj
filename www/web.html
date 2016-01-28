@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>    
+    <title>Social DJ Web Player</title>    
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -35,9 +35,22 @@
     <link rel="stylesheet" type="text/css" href="css/ionic.app.min.css"/>  
 
   </head>
-  <body id="session" ng-controller="SessionCtrl as session">    
+  <body id="session" class="web-app" ng-controller="SessionCtrl as session">    
     <ion-pane>
-      <ion-header-bar class="bar-stable">
+      <div ng-show="session.showLoader" class="cssload-container">
+        <div class="cssload-shaft1"></div>
+        <div class="cssload-shaft2"></div>
+        <div class="cssload-shaft3"></div>
+        <div class="cssload-shaft4"></div>
+        <div class="cssload-shaft5"></div>
+        <div class="cssload-shaft6"></div>
+        <div class="cssload-shaft7"></div>
+        <div class="cssload-shaft8"></div>
+        <div class="cssload-shaft9"></div>
+        <div class="cssload-shaft10"></div>
+        <p class="loading-text">Loading an awesome playlist!</p>
+      </div>
+      <ion-header-bar class="bar-stable" id="top-bar">
         <nav id="menu" class="navbar navbar-default navbar-static-top">     
            <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active col-xs-6"><a class="ripple" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playlist</a></li>
@@ -45,25 +58,10 @@
           </ul>     
         </nav>
       </ion-header-bar>
-      <ion-content overflow-scroll="true">
-        <div ng-show="session.showLoader" class="cssload-container">
-      <div class="cssload-shaft1"></div>
-      <div class="cssload-shaft2"></div>
-      <div class="cssload-shaft3"></div>
-      <div class="cssload-shaft4"></div>
-      <div class="cssload-shaft5"></div>
-      <div class="cssload-shaft6"></div>
-      <div class="cssload-shaft7"></div>
-      <div class="cssload-shaft8"></div>
-      <div class="cssload-shaft9"></div>
-      <div class="cssload-shaft10"></div>
-      <p class="loading-text">Loading an awesome playlist!</p>
-    </div>
-    
-    
+      <ion-content overflow-scroll="true">          
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">                   
-          <div id="playlist-empty" ng-show="session.songList.length == 0">
+          <div id="playlist-empty" ng-show="session.songList.length == 0 && session.currentSong.artist == null">
           <i class="fa fa-music fa-inverse"></i>
           <strong>The playlist is empty :(</strong>
           <p>Go to the "Add Song" tab to start playing some music.</p>
@@ -119,8 +117,9 @@
           </div>          
         </div>
         </div>  
-    </div>
-    <nav id="now-playing-web" class="navbar navbar-default navbar-fixed-bottom">
+    </div>          
+      </ion-content>
+      <nav id="now-playing-web" class="navbar navbar-default navbar-fixed-bottom">
       <!--Desktop (Playback)-->
       <div class="nospace">
           <div class="col-xs-12 nospace player-controls">
@@ -130,10 +129,9 @@
         </div>        
         <div class="clearfix"></div>
       </div>
-    </nav>
       <script src="https://cdns-files.deezer.com/js/min/dz.js"></script>
       <script type="text/javascript" src="js/player.js"></script>
-      </ion-content>
+    </nav>
     </ion-pane>
   </body>
 </html>
