@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="socialdjApp">
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -9,143 +9,39 @@
     <script src="lib/ionic/js/ionic.bundle.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+    <script src="cordova.js"></script>    
+
+    <!--###-->
+    <script type="text/javascript" src="js/config.js"></script>    
+    
+    <!--Firebase/AngularFire-->
+    <script src="lib/firebase/firebase.js"></script>
+    <script src="lib/angularfire/angularfire.min.js"></script>    
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
 
-    <!--###-->
-    <script type="text/javascript" src="js/config.js"></script>
-    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-    <!--<script type="text/javascript" src="js/angular.min.js"></script>      -->
-    
-    <!--Firebase/AngularFire-->
-    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>    
-
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/socialdjapp.js"></script>            
+    <script type="text/javascript" src="lib/jquery/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>            
     
     <link href='http://fonts.googleapis.com/css?family=Roboto:500,400,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/loader.css"/>    
-    <link rel="stylesheet" type="text/css" href="css/ionic.app.min.css"/>        
+    <link rel="stylesheet" type="text/css" href="css/ionic.app.min.css"/>  
 
   </head>
-  <body id="session" ng-controller="SessionCtrl as session">    
-    <ion-pane>
-      <div ng-show="session.showLoader" class="cssload-container">
-        <div class="cssload-shaft1"></div>
-        <div class="cssload-shaft2"></div>
-        <div class="cssload-shaft3"></div>
-        <div class="cssload-shaft4"></div>
-        <div class="cssload-shaft5"></div>
-        <div class="cssload-shaft6"></div>
-        <div class="cssload-shaft7"></div>
-        <div class="cssload-shaft8"></div>
-        <div class="cssload-shaft9"></div>
-        <div class="cssload-shaft10"></div>
-        <p class="loading-text">Loading an awesome playlist!</p>
-      </div>
-      <ion-header-bar class="bar-stable" id="top-bar">
-        <nav id="menu" class="navbar navbar-default navbar-static-top">     
-           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active col-xs-6"><a class="ripple" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playlist</a></li>
-            <li role="presentation" class="col-xs-6"><a class="ripple" href="#search-container" aria-controls="search-container" role="tab" data-toggle="tab">Add Song</a></li>       
-          </ul>     
-        </nav>
-      </ion-header-bar>
-      <ion-content overflow-scroll="true">                
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="home">                   
-          <div id="playlist-empty" ng-show="session.songList.length == 0 && session.currentSong.artist == null">
-            <i class="fa fa-music fa-inverse"></i>
-            <strong>The playlist is empty :(</strong>
-            <p>Go to the "Add Song" tab to start playing some music.</p>
-          </div>
-
-          <div id="now-playing" ng-show="session.currentSong.name">    
-            
-            <div class="song">
-              <div id="now-playing-title">
-                <i class="fa fa-play"></i>
-                <h4>Now Playing</h4>
-              </div>
-              <div class="col-xs-8 nospace">
-                <p><i class="fa fa-music"></i>{{session.currentSong.name}}</p>
-                <p><i class="fa fa-user"></i>{{session.currentSong.artist}}</p>
-              </div>
-              <div class="col-xs-4 nospace thumb">          
-                <img src="{{session.currentSong.thumb}}"/>            
-              </div>
-              <div class="clearfix"></div>
-            </div>
-
-          </div>
-
-          
-          <div id="play-queue" ng-show="session.songList.length > 0">            
-            <div class="song" ng-repeat="song in session.songList  |  orderBy:['-votes','timestamp']">                    
-              <div>              
-                <div class="col-xs-8 nospace">              
-                  <p><i class="fa fa-music"></i>{{song.name | limitTo: 60}} {{song.name.length > 60 ? "..." : ""}}</p>
-                  <p><i class="fa fa-user"></i>{{song.artist | limitTo: 60}} {{song.artist.length > 60 ? "..." : ""}}</p>
-                  <p><i class="fa fa-star"></i>{{song.votes}}</p>                  
-                </div>      
-                <div class="col-xs-4 nospace thumb">
-                  <img style="width:100%;" src="{{song.thumb}}"/>               
-                </div>
-                <div class="clearfix"></div>      
-              </div>
-            <div >            
-              <button class="col-xs-6" ng-click="session.removeVote(song)"><i class="fa fa-chevron-down"></i></button>
-              <button class="col-xs-6" ng-click="session.addVote(song)"><i class="fa fa-chevron-up"></i></button>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-        </div> 
-        
-        </div>
-        <div role="tabpanel" class="tab-pane" id="search-container">
-          <i id="search-icon" class="fa fa-search fa-inverse"></i>
-          <input placeholder="Search" id="search" type="text" ng-model="query" ng-keyup="$event.keyCode == 13 && session.searchSongs(query) && session.hideElement('#search-empty')">
-          <div id="search-songs-loader" ng-show="session.showSearchResultsLoader">
-            <ion-spinner icon="lines" class="spinner-assertive"></ion-spinner>
-          </div>
-          <div id="search-empty">
-            <i class="fa fa-search fa-inverse"></i>
-            <strong>Search you favorite song</strong>
-            <p>Add it to the playlist</p>
-          </div>
-        <!--<button ng-click="searchResult = session.searchSongs(query)">Search</button>-->
-        <div ng-show="!session.showSearchResultsLoader">
-        <div class="song search" ng-repeat="song in session.searchResults">         
-          <div>
-            
-            <div class="col-xs-3 nospace">
-              <div class="thumb" style="background-image:url('{{song.thumb}}')">
-              <!--<img style="width:100%;" src="{{song.thumb}}"/>-->        
-              </div>
-            </div>
-            <div class="col-xs-8 nospace song-info">
-              <p><i class="fa fa-music"></i>{{song.name | limitTo: 60}} {{song.name.length > 60 ? "..." : ""}}</p>
-              <p><i class="fa fa-user"></i>{{song.artist | limitTo: 60}} {{song.artist.length > 60 ? "..." : ""}}</p>
-            </div>            
-            <div class="col-xs-1 nospace add-song">
-              <button ng-click="session.addSong(song)"><i class="fa fa-plus"></i></button>   
-            </div>
-            
-            <div class="clearfix"></div>
-          </div>          
-        </div>
-        </div> 
-
-        </div>  
-    </div>    
-      </ion-content>
-    </ion-pane>
+  <body ng-app="app" animation="slide-left-right-ios7">
+  <div>
+    <div>        
+        <ion-nav-view></ion-nav-view>
+    </div>
+</div>
   </body>
 </html>
