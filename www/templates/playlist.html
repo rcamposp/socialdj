@@ -13,14 +13,7 @@
     <div class="cssload-shaft10"></div>
     <p class="loading-text">Loading an awesome playlist!</p>
   </div>
-  <ion-header-bar class="bar-stable" id="top-bar">
-    <nav id="menu" class="navbar navbar-default navbar-static-top">     
-       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active col-xs-6"><a class="ripple" href="#home" aria-controls="home" role="tab" data-toggle="tab">Playlist</a></li>
-        <li role="presentation" class="col-xs-6"><a class="ripple" href="#search-container" aria-controls="search-container" role="tab" data-toggle="tab">Add Song</a></li>       
-      </ul>     
-    </nav>
-  </ion-header-bar>
+  
   <ion-content overflow-scroll="true">                
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="home">                   
@@ -72,41 +65,7 @@
     </div> 
     
     </div>
-    <div role="tabpanel" class="tab-pane" id="search-container">
-      <i id="search-icon" class="fa fa-search fa-inverse"></i>
-      <input placeholder="Search" id="search" type="text" ng-model="query" ng-keyup="$event.keyCode == 13 && session.searchSongs(query) && session.hideElement('#search-empty')">
-      <div id="search-songs-loader" ng-show="session.showSearchResultsLoader">
-        <ion-spinner icon="lines" class="spinner-assertive"></ion-spinner>
-      </div>
-      <div id="search-empty">
-        <i class="fa fa-search fa-inverse"></i>
-        <strong>Search you favorite song</strong>
-        <p>Add it to the playlist</p>
-      </div>
-    <!--<button ng-click="searchResult = session.searchSongs(query)">Search</button>-->
-    <div ng-show="!session.showSearchResultsLoader">
-    <div class="song search" ng-repeat="song in session.searchResults">         
-      <div>
-        
-        <div class="col-xs-3 nospace">
-          <div class="thumb" style="background-image:url('{{song.thumb}}')">
-          <!--<img style="width:100%;" src="{{song.thumb}}"/>-->        
-          </div>
-        </div>
-        <div class="col-xs-8 nospace song-info">
-          <p><i class="fa fa-music"></i>{{song.name | limitTo: 60}} {{song.name.length > 60 ? "..." : ""}}</p>
-          <p><i class="fa fa-user"></i>{{song.artist | limitTo: 60}} {{song.artist.length > 60 ? "..." : ""}}</p>
-        </div>            
-        <div class="col-xs-1 nospace add-song">
-          <button ng-click="session.addSong(song)"><i class="fa fa-plus"></i></button>   
-        </div>
-        
-        <div class="clearfix"></div>
-      </div>          
-    </div>
-    </div> 
-
-    </div>  
+   
 </div>    
   </ion-content>
 </ion-pane>

@@ -7,23 +7,43 @@ angular.module('app.routes', [])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
+
     .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
     })   
-        
-    .state('session', {
-      url: '/session',
-      templateUrl: 'templates/session.html',
-      controller: 'SessionCtrl as session'
+
+    .state('session-tabs', {
+      url: '/session-tabs',
+      abstract:true,
+      templateUrl: 'templates/session-tabs.html'
+    })
+
+    .state('session-tabs.playlist', {
+      url: '/playlist',
+      views: {
+        'session-tabs': {
+          templateUrl: 'templates/playlist.html',
+          controller: 'SessionCtrl as session'
+        }
+      }
+    })                       
+          
+    .state('session-tabs.search', {
+      url: '/search',
+      views: {
+        'session-tabs': {
+          templateUrl: 'templates/search.html',
+          controller: 'SessionCtrl as session'
+        }
+      }
     }) 
         
     ;
     
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/session-tabs/playlist');
 
 });
