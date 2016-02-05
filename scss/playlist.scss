@@ -124,30 +124,27 @@ body, ion-content{
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
 	border: 0;
 	text-align: center;
+	li{
+		padding: 0;
+		border: 0;
+		background-color: #FF6E40;	
+		overflow: hidden;
+		.item{background-color: transparent;}
+		a{
+			background-color: transparent;
+			color: #fff;
+			border: 0;
+			height: 51px;
+			font-size: 14px;
+			font-weight: 500;
+			text-transform: uppercase;
+			&:hover{
+				background-color: transparent;
+				border-bottom: solid 2px  #FD5620;
+			}
+		}
+	}
 }
-
-#menu li{
-	padding: 0;
-	border: 0;
-	background-color: #FF6E40;	
-	overflow: hidden;
-}
-
-#menu li a{
-	background-color: transparent;
-	color: #fff;
-	border: 0;
-	height: 51px;
-	font-size: 14px;
-	font-weight: 500;
-	text-transform: uppercase;
-}
-
-#menu li a:hover{
-	background-color: transparent;
-	border-bottom: solid 2px  #FD5620;
-}
-
 
 .ripple {	
 	/*relative positioning for list items along with overflow hidden to contain the overflowing ripple*/
