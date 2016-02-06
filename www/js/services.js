@@ -5,7 +5,14 @@ angular.module('app.services', ["firebase"])
 	return SharedData;	
 }])
 
+.factory("Auth", function($firebaseAuth) {
+  var usersRef = new Firebase("https//socialdj.firebaseio.com/users");
+  return $firebaseAuth(usersRef);
+})
+
 .service('BlankService', [function(){
 
-}]);
+}])
+
+;
 

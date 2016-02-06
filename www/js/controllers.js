@@ -156,18 +156,28 @@ angular.module('app.controllers',["firebase"])
 	};	
 }])
 
-.controller('LoginCtrl', ["$scope","$firebaseAuth", function($scope, $firebaseAuth){	
-    var ref = new Firebase("https://socialdj.firebaseio.com");
-    $scope.authObj = $firebaseAuth(ref);
-	
+.controller('LoginCtrl', ["$scope","$firebaseAuth","Auth", "currentAuth", "$state", function($scope, $firebaseAuth, Auth, currentAuth, $state){	   
+	var authData = Auth.$getAuth();		
+	if(currentAuth != null){
+	 	$state.go('session-tabs.playlist');
+	}
+
 	$scope.login = function(){
-		$scope.authObj.$authWithOAuthRedirect("twitter").then(function(authData) {
-		  console.log("Logged in as:", authData.uid);
-		}).then(function() {
-		  // Never called because of page redirect
-		}).catch(function(error) {
-		  console.error("Authentication failed:", error);
-		});
+		Auth.$authWithOAuthRedirect("twitter").then(function(authData) {
+	      // User successfully logged in
+	      console.log(authData);
+	    }).catch(function(error) {
+	      if (error.code === "TRANSPORT_UNAVAILABLE") {
+	        Auth.$authWithOAuthPopup("twitter").then(function(authData) {
+	          // User successfully logged in. We can log to the console
+	          // since we’re using a popup here
+	          console.log(authData);
+	        });
+	      } else {
+	        // Another error occurred
+	        console.log(error);
+	      }
+	    });
 	}
 
 }]);
