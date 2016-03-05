@@ -1,6 +1,6 @@
 angular.module('app.controllers',["firebase"])
 
-.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObject' , function($scope, $http, $firebaseArray, $firebaseObject){	
+.controller('SessionCtrl',['$scope', '$http', '$firebaseArray', '$firebaseObject', 'currentAuth' , function($scope, $http, $firebaseArray, $firebaseObject, currentAuth){		
 	var ref = new Firebase("https://socialdj.firebaseio.com/songList");
 	var currentSongRef = new Firebase("https://socialdj.firebaseio.com/currentSong");
 	var obj = $firebaseObject(ref);			
@@ -156,15 +156,28 @@ angular.module('app.controllers',["firebase"])
 	};	
 }])
 
-.controller('LoginCtrl', ["$scope","$firebaseAuth","Auth", "currentAuth", "$state", function($scope, $firebaseAuth, Auth, currentAuth, $state){	   
-	var authData = Auth.$getAuth();		
+.controller('LoginCtrl', ["$scope","$firebaseAuth","Auth", "currentAuth", "$state", "$rootScope", function($scope, $firebaseAuth, Auth, currentAuth, $state, $rootScope){	   
+	Auth.$onAuth(function(authData){ //Es necesario que la ruta defualt '/' apunte a este controler para ejecutar esto en el callback y se agregue la inofmración del usuario al scope
+		  $scope.authData = authData;
+		  $scope.$apply();
+		});
+	  
+
 	if(currentAuth != null){
 	 	$state.go('session-tabs.playlist');
 	}
 
 	$scope.login = function(){
+		Auth.$onAuth(function(authData) {
+		  if (authData === null) {
+		    console.log("Not logged in yet");
+		  } else {
+		    console.log("Logged in as", authData.uid);
+		  }
+		  $scope.authData = authData; // This will display the user's name in our view
+		});
+
 		Auth.$authWithOAuthRedirect("twitter").then(function(authData) {
-	      // User successfully logged in
 	      console.log(authData);
 	    }).catch(function(error) {
 	      if (error.code === "TRANSPORT_UNAVAILABLE") {
